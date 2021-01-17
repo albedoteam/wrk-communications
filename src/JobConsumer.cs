@@ -4,7 +4,7 @@ using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
 using AlbedoTeam.Sdk.MessageConsumer.Configuration.Abstractions;
 using Microsoft.Extensions.Logging;
 
-namespace AlbedoTeam.Communications.Business
+namespace Communications.Business
 {
     public class JobConsumer : IJobRunner
     {

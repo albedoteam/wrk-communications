@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlbedoTeam.Communications.Business
+namespace Communications.Business
 {
     class Program
     {

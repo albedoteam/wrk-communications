@@ -1,4 +1,4 @@
-﻿namespace AlbedoTeam.Communications.Business.Models.Enums
+﻿namespace Communications.Business.Models.Enums
 {
     public enum Provider
     {

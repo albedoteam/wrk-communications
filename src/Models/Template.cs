@@ -1,10 +1,10 @@
-﻿using AlbedoTeam.Communications.Business.Models.Enums;
-using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+﻿using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
 using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
+using Communications.Business.Models.Enums;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace AlbedoTeam.Communications.Business.Models
+namespace Communications.Business.Models
 {
     [BsonCollection("Templates")]
     public class Template: Document

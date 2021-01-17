@@ -1,6 +1,6 @@
-﻿using AlbedoTeam.Communications.Business.Models.Enums;
+﻿using Communications.Business.Models.Enums;
 
-namespace AlbedoTeam.Communications.Business.Models.SubDocuments
+namespace Communications.Business.Models.SubDocuments
 {
     public class ConfigurationContract
     {

@@ -5,9 +5,9 @@
 
         <IsPackable>false</IsPackable>
 
-        <AssemblyName>AlbedoTeam.Communications.Business.Tests</AssemblyName>
+        <AssemblyName>Communications.Business.Tests</AssemblyName>
 
-        <RootNamespace>AlbedoTeam.Communications.Business.Tests</RootNamespace>
+        <RootNamespace>Communications.Business.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
