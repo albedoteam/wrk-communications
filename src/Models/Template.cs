@@ -10,7 +10,9 @@ namespace Communications.Business.Models
     public class Template: Document
     {
         public string AccountId { get; set; }
-        
+     
+        public string Name { get; set; }
+
         [BsonRepresentation(BsonType.String)]
         public MessageType MessageType { get; set; }
         
