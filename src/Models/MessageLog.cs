@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
 using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
 using Communications.Business.Models.Enums;
@@ -29,5 +30,6 @@ namespace Communications.Business.Models
         public string Content { get; set; }
         
         public List<DestinationAddress> Destinations { get; set; }
+        public DateTime SentAt { get; set; }
     }
 }

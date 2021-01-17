@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
 using Communications.Events;
@@ -6,7 +7,7 @@ using Communications.Responses;
 
 namespace Communications.Business.Mappers
 {
-    public class MessageLogMapper: IMessageLogMapper
+    public class MessageLogMapper : IMessageLogMapper
     {
         private readonly IMapper _mapper;
 
@@ -26,6 +27,11 @@ namespace Communications.Business.Mappers
             });
 
             _mapper = config.CreateMapper();
+        }
+
+        public List<MessageLogResponse> MapModelToResponse(List<MessageLog> toList)
+        {
+            return _mapper.Map<List<MessageLog>, List<MessageLogResponse>>(toList);
         }
     }
 }
