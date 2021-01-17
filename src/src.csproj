@@ -7,4 +7,23 @@
         <RootNamespace>AlbedoTeam.Communications.Business</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Consumers" />
+      <Folder Include="Services" />
+      <Folder Include="_Broker" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AlbedoTeam.Sdk.JobWorker" Version="1.0.0-CI-20210108-161256" />
+        <PackageReference Include="AlbedoTeam.Sdk.MessageConsumer" Version="1.0.0-CI-20210113-013529" />
+        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <PackageReference Include="MassTransit.Analyzers" Version="7.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
 </Project>
