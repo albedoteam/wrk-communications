@@ -39,8 +39,8 @@ namespace Communications.Business.Consumers.TemplateConsumers
                 return;
             }
 
-            var configuration = await _repository.InsertOne(_mapper.MapRequestToModel(context.Message));
-            await context.RespondAsync(_mapper.MapModelToResponse(configuration));
+            var template = await _repository.InsertOne(_mapper.MapRequestToModel(context.Message));
+            await context.RespondAsync(_mapper.MapModelToResponse(template));
         }
     }
 }

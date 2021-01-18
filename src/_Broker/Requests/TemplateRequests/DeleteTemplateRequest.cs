@@ -2,5 +2,6 @@
 {
     public interface DeleteTemplateRequest
     {
+        string Id { get; set; }
     }
 }

@@ -23,9 +23,10 @@ namespace Communications.Business.Mappers
                 // model to response
                 cfg.CreateMap<Configuration, ConfigurationResponse>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
-
-                // model to event
                 
+                cfg.CreateMap<ConfigurationContract, ConfigurationContractResponse>().ReverseMap();
+                
+                // model to event
             });
 
             _mapper = config.CreateMapper();

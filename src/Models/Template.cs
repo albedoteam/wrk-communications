@@ -1,6 +1,8 @@
-﻿using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+﻿using System.Collections.Generic;
+using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
 using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
 using Communications.Business.Models.Enums;
+using Communications.Business.Models.SubDocuments;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -20,5 +22,9 @@ namespace Communications.Business.Models
         public ContentType ContentType { get; set; }
         
         public string ContentPattern { get; set; }
+
+        public List<ContentParameter> ContentParameters { get; set; }
+        
+        public bool Enabled { get; set; }
     }
 }

@@ -14,6 +14,8 @@ namespace Communications.Responses
         
         public string ContentPattern { get; set; }
         
+        bool Enabled { get; set; }
+        
         DateTime CreatedAt { get; set; }
         DateTime? UpdatedAt { get; set; }
         bool IsDeleted { get; set; }
