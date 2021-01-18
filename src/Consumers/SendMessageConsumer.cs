@@ -14,13 +14,13 @@ namespace Communications.Business.Consumers
 {
     public class SendMessageConsumer : IConsumer<SendMessage>
     {
-        private readonly ICommunicationService _communicationService;
         private readonly IAccountService _accountService;
+        private readonly ICommunicationService _communicationService;
 
         private readonly IConfigurationRepository _configurationRepository;
-        private readonly ITemplateRepository _templateRepository;
-        private readonly IMessageLogRepository _messageLogRepository;
         private readonly IMessageLogMapper _messageLogMapper;
+        private readonly IMessageLogRepository _messageLogRepository;
+        private readonly ITemplateRepository _templateRepository;
 
         public SendMessageConsumer(
             ICommunicationService communicationService,

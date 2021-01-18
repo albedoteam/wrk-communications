@@ -11,7 +11,7 @@ using MongoDB.Driver;
 
 namespace Communications.Business.Consumers.ConfigurationConsumers
 {
-    public class UpdateConfigurationsConsumer: IConsumer<UpdateConfiguration>
+    public class UpdateConfigurationsConsumer : IConsumer<UpdateConfiguration>
     {
         private readonly IConfigurationMapper _mapper;
         private readonly IConfigurationRepository _repository;

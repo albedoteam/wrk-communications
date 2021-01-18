@@ -11,7 +11,7 @@ using MongoDB.Driver;
 
 namespace Communications.Business.Consumers.TemplateConsumers
 {
-    public class UpdateTemplateConsumer: IConsumer<UpdateTemplate>
+    public class UpdateTemplateConsumer : IConsumer<UpdateTemplate>
     {
         private readonly ITemplateMapper _mapper;
         private readonly ITemplateRepository _repository;
@@ -33,12 +33,12 @@ namespace Communications.Business.Consumers.TemplateConsumers
             {
                 if (!Enum.TryParse<MessageType>(context.Message.MessageType, out var messageType))
                     throw new Exception($"MessageType {context.Message.MessageType} is invalid");
-                
+
                 if (!Enum.TryParse<ContentType>(context.Message.ContentType, out var contentType))
                     throw new Exception($"ContentType {context.Message.ContentType} is invalid");
-                
+
                 var contentParameters = _mapper.MapRequestToModel(context.Message.ContentParameters);
-                
+
                 var update = Builders<Template>.Update.Combine(
                     Builders<Template>.Update.Set(a => a.Name, context.Message.Name),
                     Builders<Template>.Update.Set(a => a.MessageType, messageType),

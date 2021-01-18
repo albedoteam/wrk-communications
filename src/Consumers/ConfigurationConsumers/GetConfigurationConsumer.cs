@@ -7,7 +7,7 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.ConfigurationConsumers
 {
-    public class GetConfigurationConsumer: IConsumer<GetConfiguration>
+    public class GetConfigurationConsumer : IConsumer<GetConfiguration>
     {
         private readonly IConfigurationMapper _mapper;
         private readonly IConfigurationRepository _repository;

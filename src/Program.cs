@@ -1,12 +1,12 @@
-﻿using System;
+﻿using AlbedoTeam.Sdk.JobWorker;
 
 namespace Communications.Business
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            Console.WriteLine("Hello World!");
+            Worker.Configure<Startup>().Run();
         }
     }
 }

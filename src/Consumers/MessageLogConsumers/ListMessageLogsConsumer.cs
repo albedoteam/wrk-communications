@@ -8,7 +8,7 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.MessageLogConsumers
 {
-    public class ListMessageLogsConsumer: IConsumer<ListMessageLogs>
+    public class ListMessageLogsConsumer : IConsumer<ListMessageLogs>
     {
         private readonly IMessageLogMapper _mapper;
         private readonly IMessageLogRepository _repository;

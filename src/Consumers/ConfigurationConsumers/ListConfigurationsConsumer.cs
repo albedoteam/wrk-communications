@@ -8,7 +8,7 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.ConfigurationConsumers
 {
-    public class ListConfigurationsConsumer: IConsumer<ListConfigurations>
+    public class ListConfigurationsConsumer : IConsumer<ListConfigurations>
     {
         private readonly IConfigurationMapper _mapper;
         private readonly IConfigurationRepository _repository;

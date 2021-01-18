@@ -6,7 +6,7 @@ using MassTransit;
 
 namespace Communications.Business.Services
 {
-    public class AccountService: IAccountService
+    public class AccountService : IAccountService
     {
         private readonly IRequestClient<GetAccount> _client;
 

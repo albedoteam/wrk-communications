@@ -7,7 +7,7 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.TemplateConsumers
 {
-    public class DeleteTemplateConsumer: IConsumer<DeleteTemplate>
+    public class DeleteTemplateConsumer : IConsumer<DeleteTemplate>
     {
         private readonly ITemplateMapper _mapper;
         private readonly ITemplateRepository _repository;

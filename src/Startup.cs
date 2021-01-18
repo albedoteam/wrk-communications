@@ -54,7 +54,7 @@ namespace Communications.Business
                         .Add<CreateTemplateConsumer>()
                         .Add<UpdateTemplateConsumer>()
                         .Add<DeleteTemplateConsumer>();
-                    
+
                     // message sender
                     consumers
                         .Add<SendMessageConsumer>();

@@ -25,7 +25,7 @@ namespace Communications.Business.Mappers
                 // model to event
                 cfg.CreateMap<MessageLog, MessageSent>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
-                
+
                 // message service
                 cfg.CreateMap<Message, MessageLog>().ReverseMap();
             });

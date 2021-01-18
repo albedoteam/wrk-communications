@@ -7,7 +7,7 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.ConfigurationConsumers
 {
-    public class DeleteConfigurationConsumer: IConsumer<DeleteConfiguration>
+    public class DeleteConfigurationConsumer : IConsumer<DeleteConfiguration>
     {
         private readonly IConfigurationMapper _mapper;
         private readonly IConfigurationRepository _repository;

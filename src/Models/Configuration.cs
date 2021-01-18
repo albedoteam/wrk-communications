@@ -9,7 +9,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Communications.Business.Models
 {
     [BsonCollection("Configurations")]
-    public class Configuration: Document
+    public class Configuration : Document
     {
         public string AccountId { get; set; }
 
@@ -17,9 +17,9 @@ namespace Communications.Business.Models
 
         [BsonRepresentation(BsonType.String)]
         public Provider Provider { get; set; }
-        
+
         public List<ConfigurationContract> Contracts { get; set; }
-        
+
         public bool Enabled { get; set; }
     }
 }

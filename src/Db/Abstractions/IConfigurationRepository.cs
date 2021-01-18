@@ -3,8 +3,7 @@ using Communications.Business.Models;
 
 namespace Communications.Business.Db.Abstractions
 {
-    public interface IConfigurationRepository: IBaseRepository<Configuration>
+    public interface IConfigurationRepository : IBaseRepository<Configuration>
     {
-        
     }
 }

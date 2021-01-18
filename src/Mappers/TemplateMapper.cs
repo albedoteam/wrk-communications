@@ -9,7 +9,7 @@ using Communications.Responses;
 
 namespace Communications.Business.Mappers
 {
-    public class TemplateMapper: ITemplateMapper
+    public class TemplateMapper : ITemplateMapper
     {
         private readonly IMapper _mapper;
 

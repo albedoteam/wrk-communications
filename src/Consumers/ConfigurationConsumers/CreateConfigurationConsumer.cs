@@ -12,9 +12,9 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
 {
     public class CreateConfigurationConsumer : IConsumer<CreateConfiguration>
     {
+        private readonly IAccountService _accountService;
         private readonly IConfigurationMapper _mapper;
         private readonly IConfigurationRepository _repository;
-        private readonly IAccountService _accountService;
 
         public CreateConfigurationConsumer(
             IConfigurationMapper mapper,

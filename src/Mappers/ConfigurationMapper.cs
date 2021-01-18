@@ -9,7 +9,7 @@ using Communications.Responses;
 
 namespace Communications.Business.Mappers
 {
-    public class ConfigurationMapper: IConfigurationMapper
+    public class ConfigurationMapper : IConfigurationMapper
     {
         private readonly IMapper _mapper;
 
@@ -24,7 +24,7 @@ namespace Communications.Business.Mappers
                 // model to response
                 cfg.CreateMap<Configuration, ConfigurationResponse>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
-                
+
                 // model to event
             });
 

@@ -10,11 +10,11 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.TemplateConsumers
 {
-    public class CreateTemplateConsumer: IConsumer<CreateTemplate>
+    public class CreateTemplateConsumer : IConsumer<CreateTemplate>
     {
+        private readonly IAccountService _accountService;
         private readonly ITemplateMapper _mapper;
         private readonly ITemplateRepository _repository;
-        private readonly IAccountService _accountService;
 
         public CreateTemplateConsumer(
             ITemplateMapper mapper,

@@ -8,7 +8,7 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.TemplateConsumers
 {
-    public class ListTemplatesConsumer: IConsumer<ListTemplates>
+    public class ListTemplatesConsumer : IConsumer<ListTemplates>
     {
         private readonly ITemplateMapper _mapper;
         private readonly ITemplateRepository _repository;
