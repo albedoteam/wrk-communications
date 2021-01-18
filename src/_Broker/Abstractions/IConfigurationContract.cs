@@ -1,4 +1,4 @@
-﻿namespace Communications.Absctractions
+﻿namespace Communications.Abstractions
 {
     public interface IConfigurationContract
     {

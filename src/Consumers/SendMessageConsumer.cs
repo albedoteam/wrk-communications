@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Communications.Absctractions;
+using Communications.Abstractions;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;

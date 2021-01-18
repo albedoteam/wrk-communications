@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using Communications.Absctractions;
+using Communications.Abstractions;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
 using Communications.Business.Models.SubDocuments;

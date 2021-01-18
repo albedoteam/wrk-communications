@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Communications.Absctractions;
+using Communications.Abstractions;
 
 namespace Communications.Commands
 {

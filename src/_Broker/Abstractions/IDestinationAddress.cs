@@ -1,8 +1,8 @@
-﻿namespace Communications.Absctractions
+﻿namespace Communications.Abstractions
 {
     public interface IDestinationAddress
     {
-        public string Name { get; set; }
-        public string Address { get; set; }
+        string Name { get; set; }
+        string Address { get; set; }
     }
 }

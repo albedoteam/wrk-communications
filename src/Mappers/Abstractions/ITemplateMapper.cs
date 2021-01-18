@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Communications.Absctractions;
+using Communications.Abstractions;
 using Communications.Business.Models;
 using Communications.Business.Models.SubDocuments;
 using Communications.Requests;
