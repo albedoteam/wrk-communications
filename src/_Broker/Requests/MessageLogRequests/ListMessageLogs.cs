@@ -1,6 +1,6 @@
 ﻿namespace Communications.Requests
 {
-    public interface ListTemplatesRequest
+    public interface ListMessageLogs
     {
         int Page { get; set; }
         int PageSize { get; set; }

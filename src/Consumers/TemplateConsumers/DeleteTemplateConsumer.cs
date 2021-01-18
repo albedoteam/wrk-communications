@@ -7,18 +7,18 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.TemplateConsumers
 {
-    public class DeleteTemplateRequestConsumer: IConsumer<DeleteTemplateRequest>
+    public class DeleteTemplateConsumer: IConsumer<DeleteTemplate>
     {
         private readonly ITemplateMapper _mapper;
         private readonly ITemplateRepository _repository;
 
-        public DeleteTemplateRequestConsumer(ITemplateMapper mapper, ITemplateRepository repository)
+        public DeleteTemplateConsumer(ITemplateMapper mapper, ITemplateRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<DeleteTemplateRequest> context)
+        public async Task Consume(ConsumeContext<DeleteTemplate> context)
         {
             var template = await _repository.FindById(context.Message.Id);
             if (template is null)

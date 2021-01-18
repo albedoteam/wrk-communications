@@ -2,6 +2,7 @@
 using AlbedoTeam.Sdk.DataLayerAccess;
 using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
 using AlbedoTeam.Sdk.MessageConsumer;
+using Communications.Business.Consumers;
 using Communications.Business.Consumers.ConfigurationConsumers;
 using Communications.Business.Consumers.MessageLogConsumers;
 using Communications.Business.Consumers.TemplateConsumers;
@@ -32,22 +33,36 @@ namespace Communications.Business
             services.AddBroker(
                 configure => configure
                     .SetBrokerOptions(broker => broker.Host = configuration.GetValue<string>("BrokerOptions:Host")),
-                consumers => consumers
-                    .Add<ListConfigurationsRequestConsumer>()
-                    .Add<GetConfigurationRequestConsumer>()
-                    .Add<CreateConfigurationRequestConsumer>()
-                    .Add<UpdateConfigurationsRequestConsumer>()
-                    .Add<DeleteConfigurationRequestConsumer>()
-                    .Add<ListMessageLogsRequestConsumer>()
-                    .Add<ListTemplatesRequestConsumer>()
-                    .Add<GetTemplateRequestConsumer>()
-                    .Add<CreateTemplateRequestConsumer>()
-                    .Add<UpdateTemplateRequestConsumer>()
-                    .Add<DeleteTemplateRequestConsumer>(),
+                consumers =>
+                {
+                    // configurations
+                    consumers
+                        .Add<ListConfigurationsConsumer>()
+                        .Add<GetConfigurationConsumer>()
+                        .Add<CreateConfigurationConsumer>()
+                        .Add<UpdateConfigurationsConsumer>()
+                        .Add<DeleteConfigurationConsumer>();
+
+                    // message logs
+                    consumers
+                        .Add<ListMessageLogsConsumer>();
+
+                    // templates
+                    consumers
+                        .Add<ListTemplatesConsumer>()
+                        .Add<GetTemplateConsumer>()
+                        .Add<CreateTemplateConsumer>()
+                        .Add<UpdateTemplateConsumer>()
+                        .Add<DeleteTemplateConsumer>();
+                    
+                    // message sender
+                    consumers
+                        .Add<SendMessageConsumer>();
+                },
                 queues => queues
                     .Map<MessageSent>(),
                 clients => clients
-                    .Add<GetAccountRequest>());
+                    .Add<GetAccount>());
         }
     }
 }

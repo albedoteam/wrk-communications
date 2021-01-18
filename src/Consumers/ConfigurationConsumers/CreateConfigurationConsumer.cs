@@ -10,13 +10,13 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.ConfigurationConsumers
 {
-    public class CreateConfigurationRequestConsumer : IConsumer<CreateConfigurationRequest>
+    public class CreateConfigurationConsumer : IConsumer<CreateConfiguration>
     {
         private readonly IConfigurationMapper _mapper;
         private readonly IConfigurationRepository _repository;
         private readonly IAccountService _accountService;
 
-        public CreateConfigurationRequestConsumer(
+        public CreateConfigurationConsumer(
             IConfigurationMapper mapper,
             IConfigurationRepository repository,
             IAccountService accountService)
@@ -26,7 +26,7 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
             _accountService = accountService;
         }
 
-        public async Task Consume(ConsumeContext<CreateConfigurationRequest> context)
+        public async Task Consume(ConsumeContext<CreateConfiguration> context)
         {
             var isAccountValid = await _accountService.IsAccountValid(context.Message.AccountId);
             if (!isAccountValid)

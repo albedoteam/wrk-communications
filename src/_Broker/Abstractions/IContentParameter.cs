@@ -1,6 +1,6 @@
-﻿namespace Communications.Requests
+﻿namespace Communications.Absctractions
 {
-    public interface ContentParameterRequest
+    public interface IContentParameter
     {
         string Key { get; set; }
         string Value { get; set; }

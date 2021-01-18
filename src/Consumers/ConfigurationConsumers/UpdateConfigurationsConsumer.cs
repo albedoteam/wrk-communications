@@ -11,18 +11,18 @@ using MongoDB.Driver;
 
 namespace Communications.Business.Consumers.ConfigurationConsumers
 {
-    public class UpdateConfigurationsRequestConsumer: IConsumer<UpdateConfigurationRequest>
+    public class UpdateConfigurationsConsumer: IConsumer<UpdateConfiguration>
     {
         private readonly IConfigurationMapper _mapper;
         private readonly IConfigurationRepository _repository;
 
-        public UpdateConfigurationsRequestConsumer(IConfigurationMapper mapper, IConfigurationRepository repository)
+        public UpdateConfigurationsConsumer(IConfigurationMapper mapper, IConfigurationRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<UpdateConfigurationRequest> context)
+        public async Task Consume(ConsumeContext<UpdateConfiguration> context)
         {
             var configuration = await _repository.FindById(context.Message.Id);
             if (configuration is null)

@@ -22,7 +22,9 @@ namespace Communications.Responses
         public string Content { get; set; }
         
         public List<DestinationAddressResponse> Destinations { get; set; }
-        public DateTime SentAt { get; set; }
+        public DateTime? SentAt { get; set; }
+        public string Status { get; set; }
+        public string DetailMessage { get; set; }
         
         DateTime CreatedAt { get; set; }
         DateTime? UpdatedAt { get; set; }

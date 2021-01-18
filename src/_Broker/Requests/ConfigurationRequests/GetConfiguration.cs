@@ -1,7 +1,8 @@
 ﻿namespace Communications.Requests
 {
-    public interface DeleteConfigurationRequest
+    public interface GetConfiguration
     {
         string Id { get; set; }
+        bool ShowDeleted { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using Communications.Absctractions;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
 using Communications.Business.Models.SubDocuments;
@@ -17,14 +18,12 @@ namespace Communications.Business.Mappers
             var config = new MapperConfiguration(cfg =>
             {
                 // request to model
-                cfg.CreateMap<Template, CreateTemplateRequest>().ReverseMap();
-                cfg.CreateMap<ContentParameter, ContentParameterRequest>().ReverseMap();
+                cfg.CreateMap<Template, CreateTemplate>().ReverseMap();
+                cfg.CreateMap<ContentParameter, IContentParameter>().ReverseMap();
 
                 // model to response
                 cfg.CreateMap<Template, TemplateResponse>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
-                
-                cfg.CreateMap<ContentParameter, ContentParameterResponse>().ReverseMap();
 
                 // model to event
             });
@@ -32,9 +31,9 @@ namespace Communications.Business.Mappers
             _mapper = config.CreateMapper();
         }
 
-        public Template MapRequestToModel(CreateTemplateRequest request)
+        public Template MapRequestToModel(CreateTemplate request)
         {
-            return _mapper.Map<CreateTemplateRequest, Template>(request);
+            return _mapper.Map<CreateTemplate, Template>(request);
         }
 
         public TemplateResponse MapModelToResponse(Template model)
@@ -45,6 +44,11 @@ namespace Communications.Business.Mappers
         public List<TemplateResponse> MapModelToResponse(List<Template> modelList)
         {
             return _mapper.Map<List<Template>, List<TemplateResponse>>(modelList);
+        }
+
+        public List<ContentParameter> MapRequestToModel(List<IContentParameter> request)
+        {
+            return _mapper.Map<List<IContentParameter>, List<ContentParameter>>(request);
         }
     }
 }

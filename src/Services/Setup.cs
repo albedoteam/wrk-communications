@@ -8,6 +8,7 @@ namespace Communications.Business.Services
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ICommunicationService, CommunicationService>();
 
             return services;
         }

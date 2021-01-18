@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Communications.Absctractions;
 using Communications.Business.Models;
 using Communications.Business.Models.SubDocuments;
 using Communications.Requests;
@@ -8,8 +9,8 @@ namespace Communications.Business.Mappers.Abstractions
 {
     public interface IConfigurationMapper
     {
-        Configuration MapRequestToModel(CreateConfigurationRequest request);
-        List<ConfigurationContract> MapRequestToModel(List<ConfigurationContractRequest> request);
+        Configuration MapRequestToModel(CreateConfiguration request);
+        List<ConfigurationContract> MapRequestToModel(List<IConfigurationContract> request);
         ConfigurationResponse MapModelToResponse(Configuration model);
         List<ConfigurationResponse> MapModelToResponse(List<Configuration> modelList);
     }

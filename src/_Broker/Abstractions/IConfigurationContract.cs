@@ -1,6 +1,6 @@
-﻿namespace Communications.Requests
+﻿namespace Communications.Absctractions
 {
-    public interface ConfigurationContractRequest
+    public interface IConfigurationContract
     {
         string MessageType { get; set; }
         int FreeQuota { get; set; }

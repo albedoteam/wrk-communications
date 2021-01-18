@@ -10,13 +10,13 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.TemplateConsumers
 {
-    public class CreateTemplateRequestConsumer: IConsumer<CreateTemplateRequest>
+    public class CreateTemplateConsumer: IConsumer<CreateTemplate>
     {
         private readonly ITemplateMapper _mapper;
         private readonly ITemplateRepository _repository;
         private readonly IAccountService _accountService;
 
-        public CreateTemplateRequestConsumer(
+        public CreateTemplateConsumer(
             ITemplateMapper mapper,
             ITemplateRepository repository,
             IAccountService accountService)
@@ -26,7 +26,7 @@ namespace Communications.Business.Consumers.TemplateConsumers
             _accountService = accountService;
         }
 
-        public async Task Consume(ConsumeContext<CreateTemplateRequest> context)
+        public async Task Consume(ConsumeContext<CreateTemplate> context)
         {
             var isAccountValid = await _accountService.IsAccountValid(context.Message.AccountId);
             if (!isAccountValid)
@@ -35,7 +35,7 @@ namespace Communications.Business.Consumers.TemplateConsumers
             var exists = (await _repository.FilterBy(t => t.Name.Equals(context.Message.Name))).Any();
             if (exists)
             {
-                await context.RespondAsync<ConfigurationExists>(new { });
+                await context.RespondAsync<TemplateExists>(new { });
                 return;
             }
 

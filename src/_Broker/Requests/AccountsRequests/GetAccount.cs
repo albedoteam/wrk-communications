@@ -1,6 +1,6 @@
-﻿namespace Communications.Requests
+﻿namespace Accounts.Requests
 {
-    public interface GetTemplateRequest
+    public interface GetAccount
     {
         string Id { get; set; }
         bool ShowDeleted { get; set; }

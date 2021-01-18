@@ -1,6 +1,6 @@
 ﻿namespace Communications.Requests
 {
-    public interface DeleteTemplateRequest
+    public interface DeleteConfiguration
     {
         string Id { get; set; }
     }

@@ -30,6 +30,8 @@ namespace Communications.Business.Models
         public string Content { get; set; }
         
         public List<DestinationAddress> Destinations { get; set; }
-        public DateTime SentAt { get; set; }
+        public DateTime? SentAt { get; set; }
+        public string Status { get; set; }
+        public string DetailMessage { get; set; }
     }
 }

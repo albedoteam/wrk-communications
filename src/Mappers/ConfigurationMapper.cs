@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
+using Communications.Absctractions;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
 using Communications.Business.Models.SubDocuments;
@@ -17,14 +18,12 @@ namespace Communications.Business.Mappers
             var config = new MapperConfiguration(cfg =>
             {
                 // request to model
-                cfg.CreateMap<Configuration, CreateConfigurationRequest>().ReverseMap();
-                cfg.CreateMap<ConfigurationContract, ConfigurationContractRequest>().ReverseMap();
+                cfg.CreateMap<Configuration, CreateConfiguration>().ReverseMap();
+                cfg.CreateMap<ConfigurationContract, IConfigurationContract>().ReverseMap();
 
                 // model to response
                 cfg.CreateMap<Configuration, ConfigurationResponse>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
-                
-                cfg.CreateMap<ConfigurationContract, ConfigurationContractResponse>().ReverseMap();
                 
                 // model to event
             });
@@ -32,14 +31,14 @@ namespace Communications.Business.Mappers
             _mapper = config.CreateMapper();
         }
 
-        public Configuration MapRequestToModel(CreateConfigurationRequest request)
+        public Configuration MapRequestToModel(CreateConfiguration request)
         {
-            return _mapper.Map<CreateConfigurationRequest, Configuration>(request);
+            return _mapper.Map<CreateConfiguration, Configuration>(request);
         }
 
-        public List<ConfigurationContract> MapRequestToModel(List<ConfigurationContractRequest> request)
+        public List<ConfigurationContract> MapRequestToModel(List<IConfigurationContract> request)
         {
-            return _mapper.Map<List<ConfigurationContractRequest>, List<ConfigurationContract>>(request);
+            return _mapper.Map<List<IConfigurationContract>, List<ConfigurationContract>>(request);
         }
 
         public ConfigurationResponse MapModelToResponse(Configuration model)

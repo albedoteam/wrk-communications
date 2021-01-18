@@ -1,11 +1,12 @@
-﻿namespace Communications.Requests
+﻿using System.Collections.Generic;
+using Communications.Absctractions;
+
+namespace Communications.Requests
 {
-    public interface UpdateTemplateRequest
+    public interface UpdateTemplate
     {
         string Id { get; set; }
         
-        string AccountId { get; set; }
-
         string Name { get; set; }
 
         string MessageType { get; set; }
@@ -15,5 +16,7 @@
         string ContentPattern { get; set; }
         
         bool Enabled { get; set; }
+        
+        List<IContentParameter> ContentParameters { get; set; }
     }
 }

@@ -7,18 +7,18 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.ConfigurationConsumers
 {
-    public class GetConfigurationRequestConsumer: IConsumer<GetConfigurationRequest>
+    public class GetConfigurationConsumer: IConsumer<GetConfiguration>
     {
         private readonly IConfigurationMapper _mapper;
         private readonly IConfigurationRepository _repository;
 
-        public GetConfigurationRequestConsumer(IConfigurationMapper mapper, IConfigurationRepository repository)
+        public GetConfigurationConsumer(IConfigurationMapper mapper, IConfigurationRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<GetConfigurationRequest> context)
+        public async Task Consume(ConsumeContext<GetConfiguration> context)
         {
             var configuration = await _repository.FindById(context.Message.Id, context.Message.ShowDeleted);
 

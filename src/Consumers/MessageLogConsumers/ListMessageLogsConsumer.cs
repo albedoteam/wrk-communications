@@ -8,18 +8,18 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.MessageLogConsumers
 {
-    public class ListMessageLogsRequestConsumer: IConsumer<ListMessageLogsRequest>
+    public class ListMessageLogsConsumer: IConsumer<ListMessageLogs>
     {
         private readonly IMessageLogMapper _mapper;
         private readonly IMessageLogRepository _repository;
 
-        public ListMessageLogsRequestConsumer(IMessageLogMapper mapper, IMessageLogRepository repository)
+        public ListMessageLogsConsumer(IMessageLogMapper mapper, IMessageLogRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<ListMessageLogsRequest> context)
+        public async Task Consume(ConsumeContext<ListMessageLogs> context)
         {
             var page = context.Message.Page > 0 ? context.Message.Page : 1;
             var pageSize = context.Message.PageSize <= 1 ? 1 : context.Message.PageSize;

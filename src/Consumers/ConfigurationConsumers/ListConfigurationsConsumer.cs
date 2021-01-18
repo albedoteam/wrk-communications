@@ -6,40 +6,40 @@ using Communications.Requests;
 using Communications.Responses;
 using MassTransit;
 
-namespace Communications.Business.Consumers.TemplateConsumers
+namespace Communications.Business.Consumers.ConfigurationConsumers
 {
-    public class ListTemplatesRequestConsumer: IConsumer<ListTemplatesRequest>
+    public class ListConfigurationsConsumer: IConsumer<ListConfigurations>
     {
-        private readonly ITemplateMapper _mapper;
-        private readonly ITemplateRepository _repository;
+        private readonly IConfigurationMapper _mapper;
+        private readonly IConfigurationRepository _repository;
 
-        public ListTemplatesRequestConsumer(ITemplateMapper mapper, ITemplateRepository repository)
+        public ListConfigurationsConsumer(IConfigurationMapper mapper, IConfigurationRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<ListTemplatesRequest> context)
+        public async Task Consume(ConsumeContext<ListConfigurations> context)
         {
             var page = context.Message.Page > 0 ? context.Message.Page : 1;
             var pageSize = context.Message.PageSize <= 1 ? 1 : context.Message.PageSize;
 
-            var (totalPages, templates) = await _repository.QueryByPage(
+            var (totalPages, configurations) = await _repository.QueryByPage(
                 page,
                 pageSize,
                 a => context.Message.ShowDeleted || !a.IsDeleted,
                 a => a.Name);
 
-            if (!templates.Any())
-                await context.RespondAsync<TemplateNotFound>(new { });
+            if (!configurations.Any())
+                await context.RespondAsync<ConfigurationNotFound>(new { });
             else
-                await context.RespondAsync<ListTemplatesResponse>(new
+                await context.RespondAsync<ListConfigurationsResponse>(new
                 {
                     context.Message.Page,
                     context.Message.PageSize,
-                    RecordsInPage = templates.Count,
+                    RecordsInPage = configurations.Count,
                     TotalPages = totalPages,
-                    Items = _mapper.MapModelToResponse(templates.ToList())
+                    Items = _mapper.MapModelToResponse(configurations.ToList())
                 });
         }
     }

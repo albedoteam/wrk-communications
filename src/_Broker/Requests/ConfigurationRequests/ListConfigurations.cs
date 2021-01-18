@@ -1,6 +1,6 @@
 ﻿namespace Communications.Requests
 {
-    public interface ListConfigurationsRequest
+    public interface ListConfigurations
     {
         int Page { get; set; }
         int PageSize { get; set; }

@@ -11,18 +11,18 @@ using MongoDB.Driver;
 
 namespace Communications.Business.Consumers.TemplateConsumers
 {
-    public class UpdateTemplateRequestConsumer: IConsumer<UpdateTemplateRequest>
+    public class UpdateTemplateConsumer: IConsumer<UpdateTemplate>
     {
         private readonly ITemplateMapper _mapper;
         private readonly ITemplateRepository _repository;
 
-        public UpdateTemplateRequestConsumer(ITemplateMapper mapper, ITemplateRepository repository)
+        public UpdateTemplateConsumer(ITemplateMapper mapper, ITemplateRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<UpdateTemplateRequest> context)
+        public async Task Consume(ConsumeContext<UpdateTemplate> context)
         {
             var template = await _repository.FindById(context.Message.Id);
             if (template is null)
@@ -37,11 +37,14 @@ namespace Communications.Business.Consumers.TemplateConsumers
                 if (!Enum.TryParse<ContentType>(context.Message.ContentType, out var contentType))
                     throw new Exception($"ContentType {context.Message.ContentType} is invalid");
                 
+                var contentParameters = _mapper.MapRequestToModel(context.Message.ContentParameters);
+                
                 var update = Builders<Template>.Update.Combine(
                     Builders<Template>.Update.Set(a => a.Name, context.Message.Name),
                     Builders<Template>.Update.Set(a => a.MessageType, messageType),
                     Builders<Template>.Update.Set(a => a.ContentType, contentType),
                     Builders<Template>.Update.Set(a => a.ContentPattern, context.Message.ContentPattern),
+                    Builders<Template>.Update.Set(a => a.ContentParameters, contentParameters),
                     Builders<Template>.Update.Set(a => a.Enabled, context.Message.Enabled));
 
                 await _repository.UpdateById(context.Message.Id, update);

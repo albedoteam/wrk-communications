@@ -7,18 +7,18 @@ using MassTransit;
 
 namespace Communications.Business.Consumers.TemplateConsumers
 {
-    public class GetTemplateRequestConsumer: IConsumer<GetTemplateRequest>
+    public class GetTemplateConsumer: IConsumer<GetTemplate>
     {
         private readonly ITemplateMapper _mapper;
         private readonly ITemplateRepository _repository;
 
-        public GetTemplateRequestConsumer(ITemplateMapper mapper, ITemplateRepository repository)
+        public GetTemplateConsumer(ITemplateMapper mapper, ITemplateRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
         }
 
-        public async Task Consume(ConsumeContext<GetTemplateRequest> context)
+        public async Task Consume(ConsumeContext<GetTemplate> context)
         {
             var template = await _repository.FindById(context.Message.Id, context.Message.ShowDeleted);
 
