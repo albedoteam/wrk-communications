@@ -21,6 +21,13 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
 
         public async Task Consume(ConsumeContext<GetConfiguration> context)
         {
+            if (!context.Message.Id.IsValidObjectId())
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.InvalidOperation,
+                    ErrorMessage = "The configuration ID does not have a valid ObjectId format"
+                });
+
             var configuration = await _repository.FindById(context.Message.Id, context.Message.ShowDeleted);
 
             if (configuration is null)

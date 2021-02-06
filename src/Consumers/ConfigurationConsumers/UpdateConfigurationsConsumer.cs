@@ -23,6 +23,13 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
 
         public async Task Consume(ConsumeContext<UpdateConfiguration> context)
         {
+            if (!context.Message.Id.IsValidObjectId())
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.InvalidOperation,
+                    ErrorMessage = "The configuration ID does not have a valid ObjectId format"
+                });
+
             var configuration = await _repository.FindById(context.Message.Id);
             if (configuration is null)
             {
@@ -44,7 +51,7 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
 
                 await _repository.UpdateById(context.Message.Id, update);
 
-                // get "updated" account
+                // get "updated" configuration
                 configuration = await _repository.FindById(context.Message.Id);
                 await context.RespondAsync(_mapper.MapModelToResponse(configuration));
             }

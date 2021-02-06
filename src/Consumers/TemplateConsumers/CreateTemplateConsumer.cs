@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AlbedoTeam.Communications.Contracts.Common;
 using AlbedoTeam.Communications.Contracts.Requests;
@@ -31,7 +30,15 @@ namespace Communications.Business.Consumers.TemplateConsumers
         {
             var isAccountValid = await _accountService.IsAccountValid(context.Message.AccountId);
             if (!isAccountValid)
-                throw new Exception($"Account invalid for id ${context.Message.AccountId}");
+            {
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.InvalidOperation,
+                    ErrorMessage = $"Account invalid for id ${context.Message.AccountId}"
+                });
+
+                return;
+            }
 
             var exists = (await _repository.FilterBy(t => t.Name.Equals(context.Message.Name))).Any();
             if (exists)

@@ -23,6 +23,13 @@ namespace Communications.Business.Consumers.TemplateConsumers
 
         public async Task Consume(ConsumeContext<UpdateTemplate> context)
         {
+            if (!context.Message.Id.IsValidObjectId())
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.InvalidOperation,
+                    ErrorMessage = "The template ID does not have a valid ObjectId format"
+                });
+
             var template = await _repository.FindById(context.Message.Id);
             if (template is null)
             {
@@ -46,7 +53,7 @@ namespace Communications.Business.Consumers.TemplateConsumers
 
                 await _repository.UpdateById(context.Message.Id, update);
 
-                // get "updated" account
+                // get "updated" template
                 template = await _repository.FindById(context.Message.Id);
                 await context.RespondAsync(_mapper.MapModelToResponse(template));
             }

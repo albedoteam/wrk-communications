@@ -28,6 +28,9 @@ namespace Communications.Business.Services
 
         private async Task<AccountResponse> GetAccountRequest(string accountId)
         {
+            if (!accountId.IsValidObjectId())
+                return null;
+
             var (accountResponse, notFoundResponse) = await _client.GetResponse<AccountResponse, ErrorResponse>(new
             {
                 Id = accountId,

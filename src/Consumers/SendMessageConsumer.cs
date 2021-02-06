@@ -50,20 +50,27 @@ namespace Communications.Business.Consumers
 
         private async Task<Message> CreateMessage(SendMessage command)
         {
+            if (!command.AccountId.IsValidObjectId())
+                throw new InvalidCastException("The account ID does not have a valid ObjectId format");
+
+            if (!command.TemplateId.IsValidObjectId())
+                throw new InvalidCastException("The template ID does not have a valid ObjectId format");
+
             var account = await _accountService.GetAccount(command.AccountId);
             if (account is null || !account.Enabled)
-                throw new Exception($"Account invalid for id ${command.AccountId}");
+                throw new InvalidOperationException($"Account invalid for id {command.AccountId}");
 
             var configurations = (await _configurationRepository.FilterBy(c => c.AccountId == command.AccountId
                                                                                && c.Enabled)).ToList();
+
             if (configurations.SingleOrDefault() is null)
-                throw new Exception($"Configuration invalid for AccountId ${command.AccountId}");
+                throw new InvalidOperationException($"Configuration invalid for AccountId {command.AccountId}");
 
             var configuration = configurations.Single();
 
             var template = await _templateRepository.FindById(command.TemplateId);
             if (template is null || !template.Enabled)
-                throw new Exception($"Template invalid for id ${command.TemplateId}");
+                throw new InvalidOperationException($"Template invalid for id {command.TemplateId}");
 
             var message = new Message
             {

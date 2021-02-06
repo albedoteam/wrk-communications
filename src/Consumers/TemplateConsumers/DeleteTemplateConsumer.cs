@@ -21,6 +21,13 @@ namespace Communications.Business.Consumers.TemplateConsumers
 
         public async Task Consume(ConsumeContext<DeleteTemplate> context)
         {
+            if (!context.Message.Id.IsValidObjectId())
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.InvalidOperation,
+                    ErrorMessage = "The template ID does not have a valid ObjectId format"
+                });
+
             var template = await _repository.FindById(context.Message.Id);
             if (template is null)
             {
