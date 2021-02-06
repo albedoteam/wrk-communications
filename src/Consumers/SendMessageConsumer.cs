@@ -8,6 +8,7 @@ using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
 using Communications.Business.Services.Abstractions;
+using Communications.Business.Services.Models;
 using MassTransit;
 
 namespace Communications.Business.Consumers
@@ -72,11 +73,15 @@ namespace Communications.Business.Consumers
             if (template is null || !template.Enabled)
                 throw new InvalidOperationException($"Template invalid for id {command.TemplateId}");
 
+            var contract = configuration.Contracts.FirstOrDefault(c => c.MessageType == template.MessageType);
+            if (contract is null)
+                throw new InvalidOperationException($"Contract for message type {template.MessageType} not found");
+
             var message = new Message
             {
                 Provider = configuration.Provider,
                 Subject = command.Subject,
-                From = command.From,
+                From = contract.From,
                 MessageType = template.MessageType,
                 Content = await ParseTemplate(template, command.Parameters),
                 Destinations = command.Destinations.ToDictionary(

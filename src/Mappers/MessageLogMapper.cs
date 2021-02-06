@@ -6,7 +6,7 @@ using AutoMapper;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
 using Communications.Business.Models.SubDocuments;
-using Communications.Business.Services.Abstractions;
+using Communications.Business.Services.Models;
 
 namespace Communications.Business.Mappers
 {
@@ -25,6 +25,8 @@ namespace Communications.Business.Mappers
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
 
                 // model to event
+                cfg.CreateMap<IDestinationAddress, DestinationAddress>().ReverseMap();
+
                 cfg.CreateMap<MessageLog, MessageSent>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
 
@@ -35,7 +37,6 @@ namespace Communications.Business.Mappers
                     {
                         dest.Destinations = new List<DestinationAddress>();
                         foreach (var (key, value) in src.Destinations)
-                        {
                             dest.Destinations.Add(new DestinationAddress
                             {
                                 DestinationType = src.MessageType == MessageType.Email
@@ -44,7 +45,6 @@ namespace Communications.Business.Mappers
                                 Name = key,
                                 Address = value
                             });
-                        }
                     });
             });
 

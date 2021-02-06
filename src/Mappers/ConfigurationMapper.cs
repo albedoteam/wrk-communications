@@ -20,6 +20,7 @@ namespace Communications.Business.Mappers
                 // request to model
                 cfg.CreateMap<Configuration, CreateConfiguration>().ReverseMap();
                 cfg.CreateMap<ConfigurationContract, IConfigurationContract>().ReverseMap();
+                cfg.CreateMap<FromAddress, IFromAddress>().ReverseMap();
 
                 // model to response
                 cfg.CreateMap<Configuration, ConfigurationResponse>(MemberList.Destination)

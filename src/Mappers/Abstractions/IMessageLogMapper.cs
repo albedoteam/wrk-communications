@@ -2,7 +2,7 @@
 using AlbedoTeam.Communications.Contracts.Events;
 using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Models;
-using Communications.Business.Services.Abstractions;
+using Communications.Business.Services.Models;
 
 namespace Communications.Business.Mappers.Abstractions
 {
