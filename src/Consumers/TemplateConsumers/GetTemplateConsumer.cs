@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
+using AlbedoTeam.Communications.Contracts.Common;
+using AlbedoTeam.Communications.Contracts.Requests;
+using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
-using Communications.Requests;
-using Communications.Responses;
 using MassTransit;
 
 namespace Communications.Business.Consumers.TemplateConsumers
@@ -23,7 +24,11 @@ namespace Communications.Business.Consumers.TemplateConsumers
             var template = await _repository.FindById(context.Message.Id, context.Message.ShowDeleted);
 
             if (template is null)
-                await context.RespondAsync<TemplateNotFound>(new { });
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.NotFound,
+                    ErrorMessage = "Template not found"
+                });
             else
                 await context.RespondAsync(_mapper.MapModelToResponse(template));
         }

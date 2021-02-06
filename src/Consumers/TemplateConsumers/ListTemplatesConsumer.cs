@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AlbedoTeam.Communications.Contracts.Common;
+using AlbedoTeam.Communications.Contracts.Requests;
+using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
-using Communications.Requests;
-using Communications.Responses;
 using MassTransit;
 
 namespace Communications.Business.Consumers.TemplateConsumers
@@ -31,7 +32,11 @@ namespace Communications.Business.Consumers.TemplateConsumers
                 a => a.Name);
 
             if (!templates.Any())
-                await context.RespondAsync<TemplateNotFound>(new { });
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.NotFound,
+                    ErrorMessage = "Templates not found"
+                });
             else
                 await context.RespondAsync<ListTemplatesResponse>(new
                 {

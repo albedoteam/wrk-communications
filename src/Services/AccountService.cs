@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Accounts.Requests;
-using Accounts.Responses;
+using AlbedoTeam.Accounts.Contracts.Requests;
+using AlbedoTeam.Accounts.Contracts.Responses;
 using Communications.Business.Services.Abstractions;
 using MassTransit;
 
@@ -17,25 +17,18 @@ namespace Communications.Business.Services
 
         public async Task<bool> IsAccountValid(string accountId)
         {
-            var (accountResponse, notFoundResponse) = await _client.GetResponse<AccountResponse, AccountNotFound>(new
-            {
-                Id = accountId,
-                ShowDeleted = false
-            });
-
-            if (accountResponse.IsCompletedSuccessfully)
-            {
-                var account = await accountResponse;
-                return account.Message.Enabled;
-            }
-
-            await notFoundResponse;
-            return false;
+            var account = await GetAccountRequest(accountId);
+            return account is { } && account.Enabled;
         }
 
         public async Task<AccountResponse> GetAccount(string accountId)
         {
-            var (accountResponse, notFoundResponse) = await _client.GetResponse<AccountResponse, AccountNotFound>(new
+            return await GetAccountRequest(accountId);
+        }
+
+        private async Task<AccountResponse> GetAccountRequest(string accountId)
+        {
+            var (accountResponse, notFoundResponse) = await _client.GetResponse<AccountResponse, ErrorResponse>(new
             {
                 Id = accountId,
                 ShowDeleted = false

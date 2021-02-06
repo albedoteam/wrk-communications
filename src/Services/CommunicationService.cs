@@ -8,7 +8,7 @@ namespace Communications.Business.Services
     {
         public async Task<SendResult> Send(Message message)
         {
-            // todo implementar a integração de fato
+            // todo PBI https://dev.azure.com/albedoteam/albedo/_workitems/edit/72
 
             if (!message.Provider.Equals(Provider.Twillio))
                 return new SendResult

@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AlbedoTeam.Communications.Contracts.Common;
+using AlbedoTeam.Communications.Contracts.Requests;
+using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
-using Communications.Requests;
-using Communications.Responses;
 using MassTransit;
 
 namespace Communications.Business.Consumers.ConfigurationConsumers
@@ -31,7 +32,11 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
                 a => a.Name);
 
             if (!configurations.Any())
-                await context.RespondAsync<ConfigurationNotFound>(new { });
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.NotFound,
+                    ErrorMessage = "Configurations not found"
+                });
             else
                 await context.RespondAsync<ListConfigurationsResponse>(new
                 {

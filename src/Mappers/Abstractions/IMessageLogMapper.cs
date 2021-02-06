@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using AlbedoTeam.Communications.Contracts.Events;
+using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Models;
 using Communications.Business.Services.Abstractions;
-using Communications.Events;
-using Communications.Responses;
 
 namespace Communications.Business.Mappers.Abstractions
 {

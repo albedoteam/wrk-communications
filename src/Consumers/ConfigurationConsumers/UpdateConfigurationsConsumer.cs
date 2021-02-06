@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AlbedoTeam.Communications.Contracts.Common;
+using AlbedoTeam.Communications.Contracts.Requests;
+using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
 using Communications.Business.Models.Enums;
-using Communications.Requests;
-using Communications.Responses;
 using MassTransit;
 using MongoDB.Driver;
 
@@ -27,7 +28,11 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
             var configuration = await _repository.FindById(context.Message.Id);
             if (configuration is null)
             {
-                await context.RespondAsync<ConfigurationNotFound>(context.Message);
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.NotFound,
+                    ErrorMessage = $"Configuration not found for id {context.Message.Id}"
+                });
             }
             else
             {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Communications.Abstractions;
+using AlbedoTeam.Communications.Contracts.Commands;
+using AlbedoTeam.Communications.Contracts.Common;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
 using Communications.Business.Services.Abstractions;
-using Communications.Commands;
 using MassTransit;
 
 namespace Communications.Business.Consumers

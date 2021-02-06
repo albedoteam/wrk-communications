@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using AlbedoTeam.Communications.Contracts.Common;
+using AlbedoTeam.Communications.Contracts.Requests;
+using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
-using Communications.Requests;
-using Communications.Responses;
 using MassTransit;
 
 namespace Communications.Business.Consumers.MessageLogConsumers
@@ -31,7 +32,11 @@ namespace Communications.Business.Consumers.MessageLogConsumers
                 a => a.SentAt);
 
             if (!messageLogs.Any())
-                await context.RespondAsync<MessageLogNotFound>(new { });
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.NotFound,
+                    ErrorMessage = "Message logs not found"
+                });
             else
                 await context.RespondAsync<ListMessageLogsResponse>(new
                 {

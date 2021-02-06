@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AlbedoTeam.Communications.Contracts.Common;
+using AlbedoTeam.Communications.Contracts.Requests;
+using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Services.Abstractions;
-using Communications.Requests;
-using Communications.Responses;
 using MassTransit;
 
 namespace Communications.Business.Consumers.TemplateConsumers
@@ -35,7 +36,11 @@ namespace Communications.Business.Consumers.TemplateConsumers
             var exists = (await _repository.FilterBy(t => t.Name.Equals(context.Message.Name))).Any();
             if (exists)
             {
-                await context.RespondAsync<TemplateExists>(new { });
+                await context.RespondAsync<ErrorResponse>(new
+                {
+                    ErrorType = ErrorType.AlreadyExists,
+                    ErrorMessage = "Template already exists"
+                });
                 return;
             }
 

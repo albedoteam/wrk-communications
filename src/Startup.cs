@@ -1,4 +1,5 @@
-﻿using Accounts.Requests;
+﻿using AlbedoTeam.Accounts.Contracts.Requests;
+using AlbedoTeam.Communications.Contracts.Events;
 using AlbedoTeam.Sdk.DataLayerAccess;
 using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
 using AlbedoTeam.Sdk.MessageConsumer;
@@ -9,7 +10,6 @@ using Communications.Business.Consumers.TemplateConsumers;
 using Communications.Business.Db;
 using Communications.Business.Mappers;
 using Communications.Business.Services;
-using Communications.Events;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

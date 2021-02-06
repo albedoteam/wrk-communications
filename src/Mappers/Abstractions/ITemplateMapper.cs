@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Communications.Abstractions;
+using AlbedoTeam.Communications.Contracts.Common;
+using AlbedoTeam.Communications.Contracts.Requests;
+using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Models;
 using Communications.Business.Models.SubDocuments;
-using Communications.Requests;
-using Communications.Responses;
 
 namespace Communications.Business.Mappers.Abstractions
 {

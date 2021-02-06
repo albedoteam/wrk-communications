@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Accounts.Responses;
+using AlbedoTeam.Accounts.Contracts.Responses;
 
 namespace Communications.Business.Services.Abstractions
 {
