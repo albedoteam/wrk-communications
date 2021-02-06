@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Communications.Business.Models.Enums;
+using AlbedoTeam.Communications.Contracts.Common;
 
 namespace Communications.Business.Services.Abstractions
 {

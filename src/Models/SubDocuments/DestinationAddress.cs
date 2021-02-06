@@ -1,4 +1,4 @@
-﻿using Communications.Business.Models.Enums;
+﻿using AlbedoTeam.Communications.Contracts.Common;
 
 namespace Communications.Business.Models.SubDocuments
 {

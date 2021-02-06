@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Communications.Business.Models.Enums;
+using AlbedoTeam.Communications.Contracts.Common;
 using Communications.Business.Services.Abstractions;
 
 namespace Communications.Business.Services

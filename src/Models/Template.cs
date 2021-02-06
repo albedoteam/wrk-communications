@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using AlbedoTeam.Communications.Contracts.Common;
 using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
 using AlbedoTeam.Sdk.DataLayerAccess.Attributes;
-using Communications.Business.Models.Enums;
 using Communications.Business.Models.SubDocuments;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;

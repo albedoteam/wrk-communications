@@ -1,12 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AlbedoTeam.Communications.Contracts.Common;
 using AlbedoTeam.Communications.Contracts.Requests;
 using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
-using Communications.Business.Models.Enums;
 using MassTransit;
 using MongoDB.Driver;
 
@@ -36,18 +34,12 @@ namespace Communications.Business.Consumers.TemplateConsumers
             }
             else
             {
-                if (!Enum.TryParse<MessageType>(context.Message.MessageType, out var messageType))
-                    throw new Exception($"MessageType {context.Message.MessageType} is invalid");
-
-                if (!Enum.TryParse<ContentType>(context.Message.ContentType, out var contentType))
-                    throw new Exception($"ContentType {context.Message.ContentType} is invalid");
-
                 var contentParameters = _mapper.MapRequestToModel(context.Message.ContentParameters);
 
                 var update = Builders<Template>.Update.Combine(
                     Builders<Template>.Update.Set(a => a.Name, context.Message.Name),
-                    Builders<Template>.Update.Set(a => a.MessageType, messageType),
-                    Builders<Template>.Update.Set(a => a.ContentType, contentType),
+                    Builders<Template>.Update.Set(a => a.MessageType, context.Message.MessageType),
+                    Builders<Template>.Update.Set(a => a.ContentType, context.Message.ContentType),
                     Builders<Template>.Update.Set(a => a.ContentPattern, context.Message.ContentPattern),
                     Builders<Template>.Update.Set(a => a.ContentParameters, contentParameters),
                     Builders<Template>.Update.Set(a => a.Enabled, context.Message.Enabled));
