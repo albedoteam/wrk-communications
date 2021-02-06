@@ -34,7 +34,7 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
                 await context.RespondAsync<ErrorResponse>(new
                 {
                     ErrorType = ErrorType.InvalidOperation,
-                    ErrorMessage = $"Account invalid for id ${context.Message.AccountId}"
+                    ErrorMessage = $"Account invalid for id {context.Message.AccountId}"
                 });
 
                 return;

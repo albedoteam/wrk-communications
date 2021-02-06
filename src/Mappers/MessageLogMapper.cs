@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using AlbedoTeam.Communications.Contracts.Common;
 using AlbedoTeam.Communications.Contracts.Events;
 using AlbedoTeam.Communications.Contracts.Responses;
 using AutoMapper;
 using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
+using Communications.Business.Models.SubDocuments;
 using Communications.Business.Services.Abstractions;
 
 namespace Communications.Business.Mappers
@@ -27,7 +29,23 @@ namespace Communications.Business.Mappers
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
 
                 // message service
-                cfg.CreateMap<Message, MessageLog>().ReverseMap();
+                cfg.CreateMap<Message, MessageLog>(MemberList.Destination)
+                    .ForMember(m => m.Destinations, opt => opt.Ignore())
+                    .AfterMap((src, dest) =>
+                    {
+                        dest.Destinations = new List<DestinationAddress>();
+                        foreach (var (key, value) in src.Destinations)
+                        {
+                            dest.Destinations.Add(new DestinationAddress
+                            {
+                                DestinationType = src.MessageType == MessageType.Email
+                                    ? DestinationType.Email
+                                    : DestinationType.Phone,
+                                Name = key,
+                                Address = value
+                            });
+                        }
+                    });
             });
 
             _mapper = config.CreateMapper();
