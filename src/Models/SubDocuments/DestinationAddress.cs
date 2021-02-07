@@ -4,6 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Communications.Business.Models.SubDocuments
 {
+    [BsonIgnoreExtraElements]
     public class DestinationAddress
     {
         [BsonRepresentation(BsonType.String)]
