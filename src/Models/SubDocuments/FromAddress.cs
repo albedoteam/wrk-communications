@@ -1,5 +1,8 @@
-﻿namespace Communications.Business.Models.SubDocuments
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace Communications.Business.Models.SubDocuments
 {
+    [BsonIgnoreExtraElements]
     public class FromAddress
     {
         public string Name { get; set; }

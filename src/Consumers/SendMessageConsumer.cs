@@ -9,6 +9,7 @@ using Communications.Business.Mappers.Abstractions;
 using Communications.Business.Models;
 using Communications.Business.Services.Abstractions;
 using Communications.Business.Services.Models;
+using Markdig;
 using MassTransit;
 
 namespace Communications.Business.Consumers
@@ -111,11 +112,20 @@ namespace Communications.Business.Consumers
             return messageLog;
         }
 
-        private async Task<string> ParseTemplate(Template template, List<IMessageParameter> messageParameters)
+        private static async Task<string> ParseTemplate(
+            Template template,
+            IEnumerable<IMessageParameter> messageParameters)
         {
-            // todo realizar o parse do ContentPatter com os ContentParameters e retornar o Content
-            await Task.CompletedTask; // << remover isto se possível
-            return template.ContentPattern;
+            var content = messageParameters.Aggregate(
+                template.ContentPattern,
+                (current, parameter) => current.Replace($"${{{parameter.Key}}}", parameter.Value));
+
+            var pipeline = new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions()
+                .Build();
+
+            var result = Markdown.ToHtml(content, pipeline);
+            return await Task.FromResult(result);
         }
     }
 }

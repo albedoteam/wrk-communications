@@ -9,10 +9,11 @@
 
     <ItemGroup>
         <PackageReference Include="AlbedoTeam.Accounts.Contracts" Version="1.0.0-CI-20210122-192656" />
-        <PackageReference Include="AlbedoTeam.Communications.Contracts" Version="1.0.0-CI-20210206-213854" />
+        <PackageReference Include="AlbedoTeam.Communications.Contracts" Version="1.0.0-CI-20210207-154251" />
         <PackageReference Include="AlbedoTeam.Sdk.JobWorker" Version="1.0.0-CI-20210108-161256" />
         <PackageReference Include="AlbedoTeam.Sdk.MessageConsumer" Version="1.0.0-CI-20210206-194801" />
         <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <PackageReference Include="Markdig" Version="0.23.0" />
         <PackageReference Include="MassTransit.Analyzers" Version="7.0.4" />
         <PackageReference Include="SendGrid" Version="9.22.0" />
     </ItemGroup>
