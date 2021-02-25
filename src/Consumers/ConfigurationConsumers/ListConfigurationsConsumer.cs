@@ -5,7 +5,9 @@ using AlbedoTeam.Communications.Contracts.Requests;
 using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
+using Communications.Business.Models;
 using MassTransit;
+using MongoDB.Driver;
 
 namespace Communications.Business.Consumers.ConfigurationConsumers
 {
@@ -25,11 +27,19 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
             var page = context.Message.Page > 0 ? context.Message.Page : 1;
             var pageSize = context.Message.PageSize <= 1 ? 1 : context.Message.PageSize;
 
+            var filterBy = Builders<Configuration>.Filter.And(
+                context.Message.ShowDeleted
+                    ? Builders<Configuration>.Filter.Empty
+                    : Builders<Configuration>.Filter.Eq(c => c.IsDeleted, false));
+
+            var orderBy = Builders<Configuration>.Sort.Ascending(c => c.Name);
+
             var (totalPages, configurations) = await _repository.QueryByPage(
+                context.Message.AccountId,
                 page,
                 pageSize,
-                a => context.Message.ShowDeleted || !a.IsDeleted,
-                a => a.Name);
+                filterBy,
+                orderBy);
 
             if (!configurations.Any())
                 await context.RespondAsync<ErrorResponse>(new
@@ -44,7 +54,10 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
                     context.Message.PageSize,
                     RecordsInPage = configurations.Count,
                     TotalPages = totalPages,
-                    Items = _mapper.MapModelToResponse(configurations.ToList())
+                    Items = _mapper.MapModelToResponse(configurations.ToList()),
+                    context.Message.FilterBy,
+                    context.Message.OrderBy,
+                    context.Message.Sorting
                 });
         }
     }

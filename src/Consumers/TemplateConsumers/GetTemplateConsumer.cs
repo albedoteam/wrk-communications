@@ -28,7 +28,10 @@ namespace Communications.Business.Consumers.TemplateConsumers
                     ErrorMessage = "The template ID does not have a valid ObjectId format"
                 });
 
-            var template = await _repository.FindById(context.Message.Id, context.Message.ShowDeleted);
+            var template = await _repository.FindById(
+                context.Message.AccountId,
+                context.Message.Id,
+                context.Message.ShowDeleted);
 
             if (template is null)
                 await context.RespondAsync<ErrorResponse>(new

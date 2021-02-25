@@ -3,7 +3,7 @@ using Communications.Business.Models;
 
 namespace Communications.Business.Db.Abstractions
 {
-    public interface IMessageLogRepository : IBaseRepository<MessageLog>
+    public interface IMessageLogRepository : IBaseRepositoryWithAccount<MessageLog>
     {
     }
 }

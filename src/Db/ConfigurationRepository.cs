@@ -5,9 +5,9 @@ using Communications.Business.Models;
 
 namespace Communications.Business.Db
 {
-    public class ConfigurationRepository : BaseRepository<Configuration>, IConfigurationRepository
+    public class ConfigurationRepository : BaseRepositoryWithAccount<Configuration>, IConfigurationRepository
     {
-        public ConfigurationRepository(IDbContext<Configuration> context) : base(context)
+        public ConfigurationRepository(IBaseRepository<Configuration> baseRepository) : base(baseRepository)
         {
         }
     }

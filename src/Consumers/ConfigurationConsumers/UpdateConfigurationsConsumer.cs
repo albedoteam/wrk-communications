@@ -30,7 +30,7 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
                     ErrorMessage = "The configuration ID does not have a valid ObjectId format"
                 });
 
-            var configuration = await _repository.FindById(context.Message.Id);
+            var configuration = await _repository.FindById(context.Message.AccountId, context.Message.Id);
             if (configuration is null)
             {
                 await context.RespondAsync<ErrorResponse>(new
@@ -49,10 +49,10 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
                     Builders<Configuration>.Update.Set(a => a.Contracts, contracts),
                     Builders<Configuration>.Update.Set(a => a.Enabled, context.Message.Enabled));
 
-                await _repository.UpdateById(context.Message.Id, update);
+                await _repository.UpdateById(context.Message.AccountId, context.Message.Id, update);
 
                 // get "updated" configuration
-                configuration = await _repository.FindById(context.Message.Id);
+                configuration = await _repository.FindById(context.Message.AccountId, context.Message.Id);
                 await context.RespondAsync(_mapper.MapModelToResponse(configuration));
             }
         }

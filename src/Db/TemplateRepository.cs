@@ -5,9 +5,9 @@ using Communications.Business.Models;
 
 namespace Communications.Business.Db
 {
-    public class TemplateRepository : BaseRepository<Template>, ITemplateRepository
+    public class TemplateRepository : BaseRepositoryWithAccount<Template>, ITemplateRepository
     {
-        public TemplateRepository(IDbContext<Template> context) : base(context)
+        public TemplateRepository(IBaseRepository<Template> baseRepository) : base(baseRepository)
         {
         }
     }

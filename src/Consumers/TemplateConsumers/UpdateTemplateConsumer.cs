@@ -30,7 +30,7 @@ namespace Communications.Business.Consumers.TemplateConsumers
                     ErrorMessage = "The template ID does not have a valid ObjectId format"
                 });
 
-            var template = await _repository.FindById(context.Message.Id);
+            var template = await _repository.FindById(context.Message.AccountId, context.Message.Id);
             if (template is null)
             {
                 await context.RespondAsync<ErrorResponse>(new
@@ -51,10 +51,10 @@ namespace Communications.Business.Consumers.TemplateConsumers
                     Builders<Template>.Update.Set(a => a.ContentParameters, contentParameters),
                     Builders<Template>.Update.Set(a => a.Enabled, context.Message.Enabled));
 
-                await _repository.UpdateById(context.Message.Id, update);
+                await _repository.UpdateById(context.Message.AccountId, context.Message.Id, update);
 
                 // get "updated" template
-                template = await _repository.FindById(context.Message.Id);
+                template = await _repository.FindById(context.Message.AccountId, context.Message.Id);
                 await context.RespondAsync(_mapper.MapModelToResponse(template));
             }
         }

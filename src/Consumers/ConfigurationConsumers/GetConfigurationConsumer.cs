@@ -28,7 +28,10 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
                     ErrorMessage = "The configuration ID does not have a valid ObjectId format"
                 });
 
-            var configuration = await _repository.FindById(context.Message.Id, context.Message.ShowDeleted);
+            var configuration = await _repository.FindById(
+                context.Message.AccountId,
+                context.Message.Id,
+                context.Message.ShowDeleted);
 
             if (configuration is null)
                 await context.RespondAsync<ErrorResponse>(new

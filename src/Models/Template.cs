@@ -9,10 +9,8 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Communications.Business.Models
 {
     [BsonCollection("Templates")]
-    public class Template : Document
+    public class Template : DocumentWithAccount
     {
-        public string AccountId { get; set; }
-
         public string Name { get; set; }
 
         [BsonRepresentation(BsonType.String)]

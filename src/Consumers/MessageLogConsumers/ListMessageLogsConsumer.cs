@@ -5,7 +5,9 @@ using AlbedoTeam.Communications.Contracts.Requests;
 using AlbedoTeam.Communications.Contracts.Responses;
 using Communications.Business.Db.Abstractions;
 using Communications.Business.Mappers.Abstractions;
+using Communications.Business.Models;
 using MassTransit;
+using MongoDB.Driver;
 
 namespace Communications.Business.Consumers.MessageLogConsumers
 {
@@ -25,11 +27,19 @@ namespace Communications.Business.Consumers.MessageLogConsumers
             var page = context.Message.Page > 0 ? context.Message.Page : 1;
             var pageSize = context.Message.PageSize <= 1 ? 1 : context.Message.PageSize;
 
+            var filterBy = Builders<MessageLog>.Filter.And(
+                context.Message.ShowDeleted
+                    ? Builders<MessageLog>.Filter.Empty
+                    : Builders<MessageLog>.Filter.Eq(l => l.IsDeleted, false));
+
+            var orderBy = Builders<MessageLog>.Sort.Ascending(l => l.SentAt);
+
             var (totalPages, messageLogs) = await _repository.QueryByPage(
+                context.Message.AccountId,
                 page,
                 pageSize,
-                a => context.Message.ShowDeleted || !a.IsDeleted,
-                a => a.SentAt);
+                filterBy,
+                orderBy);
 
             if (!messageLogs.Any())
                 await context.RespondAsync<ErrorResponse>(new
@@ -44,7 +54,10 @@ namespace Communications.Business.Consumers.MessageLogConsumers
                     context.Message.PageSize,
                     RecordsInPage = messageLogs.Count,
                     TotalPages = totalPages,
-                    Items = _mapper.MapModelToResponse(messageLogs.ToList())
+                    Items = _mapper.MapModelToResponse(messageLogs.ToList()),
+                    context.Message.FilterBy,
+                    context.Message.OrderBy,
+                    context.Message.Sorting
                 });
         }
     }

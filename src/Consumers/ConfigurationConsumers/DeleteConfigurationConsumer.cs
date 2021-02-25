@@ -28,7 +28,7 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
                     ErrorMessage = "The configuration ID does not have a valid ObjectId format"
                 });
 
-            var configuration = await _repository.FindById(context.Message.Id);
+            var configuration = await _repository.FindById(context.Message.AccountId, context.Message.Id);
             if (configuration is null)
             {
                 await context.RespondAsync<ErrorResponse>(new
@@ -39,10 +39,10 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
             }
             else
             {
-                await _repository.DeleteById(context.Message.Id);
+                await _repository.DeleteById(context.Message.AccountId, context.Message.Id);
 
                 // get "soft-deleted"
-                configuration = await _repository.FindById(context.Message.Id, true);
+                configuration = await _repository.FindById(context.Message.Id, context.Message.Id, true);
 
                 await context.RespondAsync(_mapper.MapModelToResponse(configuration)); // respond async
             }

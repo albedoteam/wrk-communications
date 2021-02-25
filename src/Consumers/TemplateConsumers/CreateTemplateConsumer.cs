@@ -40,7 +40,9 @@ namespace Communications.Business.Consumers.TemplateConsumers
                 return;
             }
 
-            var exists = (await _repository.FilterBy(t => t.Name.Equals(context.Message.Name))).Any();
+            var exists = (await _repository.FilterBy(context.Message.AccountId,
+                t => t.Name.Equals(context.Message.Name))).Any();
+
             if (exists)
             {
                 await context.RespondAsync<ErrorResponse>(new

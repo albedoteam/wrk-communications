@@ -62,15 +62,14 @@ namespace Communications.Business.Consumers
             if (account is null || !account.Enabled)
                 throw new InvalidOperationException($"Account invalid for id {command.AccountId}");
 
-            var configurations = (await _configurationRepository.FilterBy(c => c.AccountId == command.AccountId
-                                                                               && c.Enabled)).ToList();
+            var configurations = (await _configurationRepository.FilterBy(command.AccountId, c => c.Enabled)).ToList();
 
             if (configurations.SingleOrDefault() is null)
                 throw new InvalidOperationException($"Configuration invalid for AccountId {command.AccountId}");
 
             var configuration = configurations.Single();
 
-            var template = await _templateRepository.FindById(command.TemplateId);
+            var template = await _templateRepository.FindById(command.AccountId, command.TemplateId);
             if (template is null || !template.Enabled)
                 throw new InvalidOperationException($"Template invalid for id {command.TemplateId}");
 

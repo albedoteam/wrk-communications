@@ -28,7 +28,7 @@ namespace Communications.Business.Consumers.TemplateConsumers
                     ErrorMessage = "The template ID does not have a valid ObjectId format"
                 });
 
-            var template = await _repository.FindById(context.Message.Id);
+            var template = await _repository.FindById(context.Message.AccountId, context.Message.Id);
             if (template is null)
             {
                 await context.RespondAsync<ErrorResponse>(new
@@ -39,10 +39,10 @@ namespace Communications.Business.Consumers.TemplateConsumers
             }
             else
             {
-                await _repository.DeleteById(context.Message.Id);
+                await _repository.DeleteById(context.Message.AccountId, context.Message.Id);
 
                 // get "soft-deleted"
-                template = await _repository.FindById(context.Message.Id, true);
+                template = await _repository.FindById(context.Message.AccountId, context.Message.Id, true);
 
                 await context.RespondAsync(_mapper.MapModelToResponse(template)); // respond async
             }

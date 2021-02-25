@@ -5,9 +5,9 @@ using Communications.Business.Models;
 
 namespace Communications.Business.Db
 {
-    public class MessageLogRepository : BaseRepository<MessageLog>, IMessageLogRepository
+    public class MessageLogRepository : BaseRepositoryWithAccount<MessageLog>, IMessageLogRepository
     {
-        public MessageLogRepository(IDbContext<MessageLog> context) : base(context)
+        public MessageLogRepository(IBaseRepository<MessageLog> baseRepository) : base(baseRepository)
         {
         }
     }

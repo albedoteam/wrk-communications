@@ -10,10 +10,8 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace Communications.Business.Models
 {
     [BsonCollection("MessageLogs")]
-    public class MessageLog : Document
+    public class MessageLog : DocumentWithAccount
     {
-        public string AccountId { get; set; }
-
         [BsonRepresentation(BsonType.String)]
         public Provider Provider { get; set; }
 
