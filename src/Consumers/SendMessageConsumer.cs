@@ -62,6 +62,8 @@ namespace Communications.Business.Consumers
             if (account is null || !account.Enabled)
                 throw new InvalidOperationException($"Account invalid for id {command.AccountId}");
 
+            // var configurations = (await _configurationRepository.FilterBy(command.AccountId, c => c.AccountId == command.AccountId && c.Enabled)).ToList();
+            
             var configurations = (await _configurationRepository.FilterBy(command.AccountId, c => c.Enabled)).ToList();
 
             if (configurations.SingleOrDefault() is null)
@@ -79,6 +81,7 @@ namespace Communications.Business.Consumers
 
             var message = new Message
             {
+                AccountId = command.AccountId,
                 Provider = configuration.Provider,
                 Subject = command.Subject,
                 From = contract.From,

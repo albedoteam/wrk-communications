@@ -7,7 +7,9 @@ namespace Communications.Business.Db
 {
     public class TemplateRepository : BaseRepositoryWithAccount<Template>, ITemplateRepository
     {
-        public TemplateRepository(IBaseRepository<Template> baseRepository) : base(baseRepository)
+        public TemplateRepository(
+            IBaseRepository<Template> baseRepository,
+            IHelpersWithAccount<Template> helpers) : base(baseRepository, helpers)
         {
         }
     }

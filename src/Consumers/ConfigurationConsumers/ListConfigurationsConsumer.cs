@@ -27,12 +27,15 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
             var page = context.Message.Page > 0 ? context.Message.Page : 1;
             var pageSize = context.Message.PageSize <= 1 ? 1 : context.Message.PageSize;
 
-            var filterBy = Builders<Configuration>.Filter.And(
-                context.Message.ShowDeleted
-                    ? Builders<Configuration>.Filter.Empty
-                    : Builders<Configuration>.Filter.Eq(c => c.IsDeleted, false));
+            var filterBy = _repository.Helpers.CreateFilters(
+                context.Message.AccountId,
+                context.Message.ShowDeleted,
+                null,
+                AddFilterBy(context.Message.FilterBy));
 
-            var orderBy = Builders<Configuration>.Sort.Ascending(c => c.Name);
+            var orderBy = _repository.Helpers.CreateSorting(
+                context.Message.OrderBy,
+                context.Message.Sorting.ToString());
 
             var (totalPages, configurations) = await _repository.QueryByPage(
                 context.Message.AccountId,
@@ -59,6 +62,18 @@ namespace Communications.Business.Consumers.ConfigurationConsumers
                     context.Message.OrderBy,
                     context.Message.Sorting
                 });
+        }
+        
+        private FilterDefinition<Configuration> AddFilterBy(string filterBy)
+        {
+            if (string.IsNullOrWhiteSpace(filterBy))
+                return null;
+
+            var optionalFilters = Builders<Configuration>.Filter.Or(
+                _repository.Helpers.Like(doc => doc.Name, filterBy)
+            );
+
+            return optionalFilters;
         }
     }
 }

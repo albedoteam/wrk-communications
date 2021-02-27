@@ -7,7 +7,9 @@ namespace Communications.Business.Db
 {
     public class ConfigurationRepository : BaseRepositoryWithAccount<Configuration>, IConfigurationRepository
     {
-        public ConfigurationRepository(IBaseRepository<Configuration> baseRepository) : base(baseRepository)
+        public ConfigurationRepository(
+            IBaseRepository<Configuration> baseRepository,
+            IHelpersWithAccount<Configuration> helpers) : base(baseRepository, helpers)
         {
         }
     }

@@ -7,7 +7,9 @@ namespace Communications.Business.Db
 {
     public class MessageLogRepository : BaseRepositoryWithAccount<MessageLog>, IMessageLogRepository
     {
-        public MessageLogRepository(IBaseRepository<MessageLog> baseRepository) : base(baseRepository)
+        public MessageLogRepository(
+            IBaseRepository<MessageLog> baseRepository,
+            IHelpersWithAccount<MessageLog> helpers) : base(baseRepository, helpers)
         {
         }
     }

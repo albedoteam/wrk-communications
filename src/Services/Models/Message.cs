@@ -6,6 +6,7 @@ namespace Communications.Business.Services.Models
 {
     public class Message
     {
+        public string AccountId { get; set; }
         public Provider Provider { get; set; }
         public MessageType MessageType { get; set; }
         public FromAddress From { get; set; }

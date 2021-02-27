@@ -27,12 +27,15 @@ namespace Communications.Business.Consumers.MessageLogConsumers
             var page = context.Message.Page > 0 ? context.Message.Page : 1;
             var pageSize = context.Message.PageSize <= 1 ? 1 : context.Message.PageSize;
 
-            var filterBy = Builders<MessageLog>.Filter.And(
-                context.Message.ShowDeleted
-                    ? Builders<MessageLog>.Filter.Empty
-                    : Builders<MessageLog>.Filter.Eq(l => l.IsDeleted, false));
+            var filterBy = _repository.Helpers.CreateFilters(
+                context.Message.AccountId,
+                context.Message.ShowDeleted,
+                null,
+                AddFilterBy(context.Message.FilterBy));
 
-            var orderBy = Builders<MessageLog>.Sort.Ascending(l => l.SentAt);
+            var orderBy = _repository.Helpers.CreateSorting(
+                context.Message.OrderBy,
+                context.Message.Sorting.ToString());
 
             var (totalPages, messageLogs) = await _repository.QueryByPage(
                 context.Message.AccountId,
@@ -59,6 +62,20 @@ namespace Communications.Business.Consumers.MessageLogConsumers
                     context.Message.OrderBy,
                     context.Message.Sorting
                 });
+        }
+        
+        private FilterDefinition<MessageLog> AddFilterBy(string filterBy)
+        {
+            if (string.IsNullOrWhiteSpace(filterBy))
+                return null;
+
+            var optionalFilters = Builders<MessageLog>.Filter.Or(
+                _repository.Helpers.Like(a => a.From, filterBy),
+                _repository.Helpers.Like(a => a.Subject, filterBy),
+                _repository.Helpers.Like(a => a.Status, filterBy)
+            );
+
+            return optionalFilters;
         }
     }
 }
