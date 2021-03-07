@@ -21,8 +21,8 @@ namespace Communications.Business
         {
             services.AddDataLayerAccess(db =>
             {
-                db.ConnectionString = configuration.GetValue<string>("DatabaseSettings:ConnectionString");
-                db.DatabaseName = configuration.GetValue<string>("DatabaseSettings:DatabaseName");
+                db.ConnectionString = configuration.GetValue<string>("DatabaseSettings_ConnectionString");
+                db.DatabaseName = configuration.GetValue<string>("DatabaseSettings_DatabaseName");
             });
 
             services.AddMappers();
@@ -32,7 +32,7 @@ namespace Communications.Business
 
             services.AddBroker(
                 configure => configure
-                    .SetBrokerOptions(broker => broker.Host = configuration.GetValue<string>("BrokerOptions:Host")),
+                    .SetBrokerOptions(broker => broker.Host = configuration.GetValue<string>("Broker_Host")),
                 consumers =>
                 {
                     // configurations
