@@ -59,12 +59,12 @@ resource "kubernetes_deployment" "communications" {
           image_pull_policy = "Always"
           resources {
             limits = {
-              cpu    = "200m"
-              memory = "100Mi"
+              cpu    = "250m"
+              memory = "150Mi"
             }
             requests = {
-              cpu    = "100m"
-              memory = "50Mi"
+              cpu    = "150m"
+              memory = "75Mi"
             }
           }
           port {
