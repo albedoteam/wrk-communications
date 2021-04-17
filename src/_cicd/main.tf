@@ -63,8 +63,8 @@ resource "kubernetes_deployment" "communications" {
               memory = "150Mi"
             }
             requests = {
-              cpu    = "150m"
-              memory = "75Mi"
+              cpu    = "50m"
+              memory = "50Mi"
             }
           }
           port {

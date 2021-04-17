@@ -1,8 +1,8 @@
-﻿using Communications.Business.Services.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Communications.Business.Services
+﻿namespace Communications.Business.Services
 {
+    using Abstractions;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class Setup
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
