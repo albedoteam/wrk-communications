@@ -62,8 +62,6 @@
             if (account is null || !account.Enabled)
                 throw new InvalidOperationException($"Account invalid for id {command.AccountId}");
 
-            // var configurations = (await _configurationRepository.FilterBy(command.AccountId, c => c.AccountId == command.AccountId && c.Enabled)).ToList();
-
             var configurations = (await _configurationRepository.FilterBy(command.AccountId, c => c.Enabled)).ToList();
 
             if (configurations.SingleOrDefault() is null)
@@ -83,7 +81,9 @@
             {
                 AccountId = command.AccountId,
                 Provider = configuration.Provider,
-                Subject = command.Subject,
+                Subject = string.IsNullOrWhiteSpace(command.Subject)
+                    ? template.Subject
+                    : command.Subject,
                 From = contract.From,
                 MessageType = template.MessageType,
                 Content = await ParseTemplate(template, command.Parameters),
@@ -121,6 +121,9 @@
             var content = messageParameters.Aggregate(
                 template.ContentPattern,
                 (current, parameter) => current.Replace($"${{{parameter.Key}}}", parameter.Value));
+
+            if (template.ContentType == ContentType.Html)
+                return await Task.FromResult(content);
 
             var pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()

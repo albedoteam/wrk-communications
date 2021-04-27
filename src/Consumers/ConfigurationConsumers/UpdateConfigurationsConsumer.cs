@@ -45,6 +45,7 @@
 
                 var update = Builders<Configuration>.Update.Combine(
                     Builders<Configuration>.Update.Set(a => a.Name, context.Message.Name),
+                    Builders<Configuration>.Update.Set(a => a.DisplayName, context.Message.DisplayName),
                     Builders<Configuration>.Update.Set(a => a.Provider, context.Message.Provider),
                     Builders<Configuration>.Update.Set(a => a.Contracts, contracts),
                     Builders<Configuration>.Update.Set(a => a.Enabled, context.Message.Enabled));

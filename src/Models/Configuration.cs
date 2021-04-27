@@ -12,6 +12,7 @@
     public class Configuration : DocumentWithAccount
     {
         public string Name { get; set; }
+        public string DisplayName { get; set; }
 
         [BsonRepresentation(BsonType.String)]
         public Provider Provider { get; set; }

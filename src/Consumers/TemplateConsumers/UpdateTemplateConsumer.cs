@@ -45,6 +45,8 @@
 
                 var update = Builders<Template>.Update.Combine(
                     Builders<Template>.Update.Set(a => a.Name, context.Message.Name),
+                    Builders<Template>.Update.Set(a => a.DisplayName, context.Message.DisplayName),
+                    Builders<Template>.Update.Set(a => a.Subject, context.Message.Subject),
                     Builders<Template>.Update.Set(a => a.MessageType, context.Message.MessageType),
                     Builders<Template>.Update.Set(a => a.ContentType, context.Message.ContentType),
                     Builders<Template>.Update.Set(a => a.ContentPattern, context.Message.ContentPattern),

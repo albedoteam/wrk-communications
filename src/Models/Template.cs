@@ -12,6 +12,8 @@
     public class Template : DocumentWithAccount
     {
         public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public string Subject { get; set; }
 
         [BsonRepresentation(BsonType.String)]
         public MessageType MessageType { get; set; }
