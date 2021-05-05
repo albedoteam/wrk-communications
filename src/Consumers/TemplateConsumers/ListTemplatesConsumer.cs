@@ -27,24 +27,17 @@
             var queryRequest = QueryUtils.GetQueryParams<Template>(_mapper.RequestToQuery(context.Message));
             var queryResponse = await _repository.QueryByPage(context.Message.AccountId, queryRequest);
 
-            if (!queryResponse.Records.Any())
-                await context.RespondAsync<ErrorResponse>(new
-                {
-                    ErrorType = ErrorType.NotFound,
-                    ErrorMessage = "Templates not found"
-                });
-            else
-                await context.RespondAsync<ListTemplatesResponse>(new
-                {
-                    queryResponse.Page,
-                    queryResponse.PageSize,
-                    queryResponse.RecordsInPage,
-                    queryResponse.TotalPages,
-                    Items = _mapper.MapModelToResponse(queryResponse.Records.ToList()),
-                    context.Message.FilterBy,
-                    context.Message.OrderBy,
-                    context.Message.Sorting
-                });
+            await context.RespondAsync<ListTemplatesResponse>(new
+            {
+                queryResponse.Page,
+                queryResponse.PageSize,
+                queryResponse.RecordsInPage,
+                queryResponse.TotalPages,
+                Items = _mapper.MapModelToResponse(queryResponse.Records.ToList()),
+                context.Message.FilterBy,
+                context.Message.OrderBy,
+                context.Message.Sorting
+            });
         }
     }
 }
