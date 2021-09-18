@@ -1,20 +1,21 @@
-﻿using AlbedoTeam.Accounts.Contracts.Requests;
-using AlbedoTeam.Communications.Contracts.Events;
-using AlbedoTeam.Sdk.DataLayerAccess;
-using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
-using AlbedoTeam.Sdk.MessageConsumer;
-using Communications.Business.Consumers;
-using Communications.Business.Consumers.ConfigurationConsumers;
-using Communications.Business.Consumers.MessageLogConsumers;
-using Communications.Business.Consumers.TemplateConsumers;
-using Communications.Business.Db;
-using Communications.Business.Mappers;
-using Communications.Business.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Communications.Business
+﻿namespace Communications.Business
 {
+    using AlbedoTeam.Accounts.Contracts.Requests;
+    using AlbedoTeam.Communications.Contracts.Events;
+    using AlbedoTeam.Sdk.DataLayerAccess;
+    using AlbedoTeam.Sdk.JobWorker.Configuration.Abstractions;
+    using AlbedoTeam.Sdk.MessageConsumer;
+    using AlbedoTeam.Sdk.MessageConsumer.Configuration;
+    using Consumers;
+    using Consumers.ConfigurationConsumers;
+    using Consumers.MessageLogConsumers;
+    using Consumers.TemplateConsumers;
+    using Db;
+    using Mappers;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Services;
+
     public class Startup : IWorkerConfigurator
     {
         public void Configure(IServiceCollection services, IConfiguration configuration)
@@ -31,8 +32,28 @@ namespace Communications.Business
             services.AddTransient<IJobRunner, JobConsumer>();
 
             services.AddBroker(
-                configure => configure
-                    .SetBrokerOptions(broker => broker.Host = configuration.GetValue<string>("Broker_Host")),
+                configure =>
+                {
+                    configure.SetBrokerOptions(broker =>
+                    {
+                        broker.HostOptions = new HostOptions
+                        {
+                            Host = configuration.GetValue<string>("Broker_Host"),
+                            HeartbeatInterval = 10,
+                            RequestedChannelMax = 40,
+                            RequestedConnectionTimeout = 60000
+                        };
+
+                        broker.KillSwitchOptions = new KillSwitchOptions
+                        {
+                            ActivationThreshold = 10,
+                            TripThreshold = 0.15,
+                            RestartTimeout = 60
+                        };
+
+                        broker.PrefetchCount = 1;
+                    });
+                },
                 consumers =>
                 {
                     // configurations

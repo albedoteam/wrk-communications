@@ -1,8 +1,8 @@
-﻿using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-using Communications.Business.Models;
-
-namespace Communications.Business.Db.Abstractions
+﻿namespace Communications.Business.Db.Abstractions
 {
+    using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
+    using Models;
+
     public interface IMessageLogRepository : IBaseRepositoryWithAccount<MessageLog>
     {
     }

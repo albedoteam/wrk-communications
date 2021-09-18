@@ -1,15 +1,15 @@
-﻿using System.Threading.Tasks;
-using AlbedoTeam.Communications.Contracts.Common;
-using AlbedoTeam.Communications.Contracts.Requests;
-using AlbedoTeam.Communications.Contracts.Responses;
-using Communications.Business.Db.Abstractions;
-using Communications.Business.Mappers.Abstractions;
-using Communications.Business.Models;
-using MassTransit;
-using MongoDB.Driver;
-
-namespace Communications.Business.Consumers.TemplateConsumers
+﻿namespace Communications.Business.Consumers.TemplateConsumers
 {
+    using System.Threading.Tasks;
+    using AlbedoTeam.Communications.Contracts.Common;
+    using AlbedoTeam.Communications.Contracts.Requests;
+    using AlbedoTeam.Communications.Contracts.Responses;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using MassTransit;
+    using Models;
+    using MongoDB.Driver;
+
     public class UpdateTemplateConsumer : IConsumer<UpdateTemplate>
     {
         private readonly ITemplateMapper _mapper;
@@ -45,6 +45,8 @@ namespace Communications.Business.Consumers.TemplateConsumers
 
                 var update = Builders<Template>.Update.Combine(
                     Builders<Template>.Update.Set(a => a.Name, context.Message.Name),
+                    Builders<Template>.Update.Set(a => a.DisplayName, context.Message.DisplayName),
+                    Builders<Template>.Update.Set(a => a.Subject, context.Message.Subject),
                     Builders<Template>.Update.Set(a => a.MessageType, context.Message.MessageType),
                     Builders<Template>.Update.Set(a => a.ContentType, context.Message.ContentType),
                     Builders<Template>.Update.Set(a => a.ContentPattern, context.Message.ContentPattern),

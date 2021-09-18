@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
-using AlbedoTeam.Communications.Contracts.Common;
-using AlbedoTeam.Communications.Contracts.Requests;
-using AlbedoTeam.Communications.Contracts.Responses;
-using AutoMapper;
-using Communications.Business.Mappers.Abstractions;
-using Communications.Business.Models;
-using Communications.Business.Models.SubDocuments;
-
-namespace Communications.Business.Mappers
+﻿namespace Communications.Business.Mappers
 {
+    using System.Collections.Generic;
+    using Abstractions;
+    using AlbedoTeam.Communications.Contracts.Common;
+    using AlbedoTeam.Communications.Contracts.Requests;
+    using AlbedoTeam.Communications.Contracts.Responses;
+    using AlbedoTeam.Sdk.DataLayerAccess.Utils.Query;
+    using AutoMapper;
+    using Models;
+    using Models.SubDocuments;
+
     public class ConfigurationMapper : IConfigurationMapper
     {
         private readonly IMapper _mapper;
@@ -26,7 +27,9 @@ namespace Communications.Business.Mappers
                 cfg.CreateMap<Configuration, ConfigurationResponse>(MemberList.Destination)
                     .ForMember(t => t.Id, opt => opt.MapFrom(o => o.Id.ToString()));
 
-                // model to event
+                // request -> query
+                cfg.CreateMap<ListConfigurations, QueryParams>(MemberList.Destination)
+                    .ForMember(l => l.Sorting, opt => opt.MapFrom(o => o.Sorting.ToString()));
             });
 
             _mapper = config.CreateMapper();
@@ -50,6 +53,11 @@ namespace Communications.Business.Mappers
         public List<ConfigurationResponse> MapModelToResponse(List<Configuration> modelList)
         {
             return _mapper.Map<List<Configuration>, List<ConfigurationResponse>>(modelList);
+        }
+
+        public QueryParams RequestToQuery(ListConfigurations request)
+        {
+            return _mapper.Map<ListConfigurations, QueryParams>(request);
         }
     }
 }

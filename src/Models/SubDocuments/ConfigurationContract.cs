@@ -1,9 +1,9 @@
-﻿using AlbedoTeam.Communications.Contracts.Common;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace Communications.Business.Models.SubDocuments
+﻿namespace Communications.Business.Models.SubDocuments
 {
+    using AlbedoTeam.Communications.Contracts.Common;
+    using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
+
     [BsonIgnoreExtraElements]
     public class ConfigurationContract
     {

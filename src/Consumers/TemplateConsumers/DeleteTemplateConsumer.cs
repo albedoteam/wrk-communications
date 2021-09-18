@@ -1,13 +1,13 @@
-﻿using System.Threading.Tasks;
-using AlbedoTeam.Communications.Contracts.Common;
-using AlbedoTeam.Communications.Contracts.Requests;
-using AlbedoTeam.Communications.Contracts.Responses;
-using Communications.Business.Db.Abstractions;
-using Communications.Business.Mappers.Abstractions;
-using MassTransit;
-
-namespace Communications.Business.Consumers.TemplateConsumers
+﻿namespace Communications.Business.Consumers.TemplateConsumers
 {
+    using System.Threading.Tasks;
+    using AlbedoTeam.Communications.Contracts.Common;
+    using AlbedoTeam.Communications.Contracts.Requests;
+    using AlbedoTeam.Communications.Contracts.Responses;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using MassTransit;
+
     public class DeleteTemplateConsumer : IConsumer<DeleteTemplate>
     {
         private readonly ITemplateMapper _mapper;

@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AlbedoTeam.Communications.Contracts.Commands;
-using AlbedoTeam.Communications.Contracts.Common;
-using Communications.Business.Db.Abstractions;
-using Communications.Business.Mappers.Abstractions;
-using Communications.Business.Models;
-using Communications.Business.Services.Abstractions;
-using Communications.Business.Services.Models;
-using Markdig;
-using MassTransit;
-
-namespace Communications.Business.Consumers
+﻿namespace Communications.Business.Consumers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AlbedoTeam.Communications.Contracts.Commands;
+    using AlbedoTeam.Communications.Contracts.Common;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using Markdig;
+    using MassTransit;
+    using Models;
+    using Services.Abstractions;
+    using Services.Models;
+
     public class SendMessageConsumer : IConsumer<SendMessage>
     {
         private readonly IAccountService _accountService;
@@ -62,8 +62,6 @@ namespace Communications.Business.Consumers
             if (account is null || !account.Enabled)
                 throw new InvalidOperationException($"Account invalid for id {command.AccountId}");
 
-            // var configurations = (await _configurationRepository.FilterBy(command.AccountId, c => c.AccountId == command.AccountId && c.Enabled)).ToList();
-            
             var configurations = (await _configurationRepository.FilterBy(command.AccountId, c => c.Enabled)).ToList();
 
             if (configurations.SingleOrDefault() is null)
@@ -83,7 +81,9 @@ namespace Communications.Business.Consumers
             {
                 AccountId = command.AccountId,
                 Provider = configuration.Provider,
-                Subject = command.Subject,
+                Subject = string.IsNullOrWhiteSpace(command.Subject)
+                    ? template.Subject
+                    : command.Subject,
                 From = contract.From,
                 MessageType = template.MessageType,
                 Content = await ParseTemplate(template, command.Parameters),
@@ -121,6 +121,9 @@ namespace Communications.Business.Consumers
             var content = messageParameters.Aggregate(
                 template.ContentPattern,
                 (current, parameter) => current.Replace($"${{{parameter.Key}}}", parameter.Value));
+
+            if (template.ContentType == ContentType.Html)
+                return await Task.FromResult(content);
 
             var pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
