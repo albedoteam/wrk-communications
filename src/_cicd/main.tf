@@ -1,14 +1,11 @@
-terraform {
+﻿terraform {
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = ">= 2.0.0"
     }
   }
-  backend "kubernetes" {
-    secret_suffix    = "communications-business"
-    load_config_file = true
-  }
+  backend "kubernetes" {}
 }
 
 provider "kubernetes" {
@@ -17,7 +14,7 @@ provider "kubernetes" {
 
 resource "kubernetes_secret" "communications" {
   metadata {
-    name      = var.project_secrets_name
+    name      = "${var.environment_prefix}${var.project_secrets_name}"
     namespace = var.namespace
   }
   data = {
@@ -29,10 +26,10 @@ resource "kubernetes_secret" "communications" {
 
 resource "kubernetes_deployment" "communications" {
   metadata {
-    name      = var.project_name
+    name      = "${var.environment_prefix}${var.project_name}"
     namespace = var.namespace
     labels = {
-      app = var.project_label
+      app = "${var.environment_prefix}${var.project_label}"
     }
   }
 
@@ -40,13 +37,13 @@ resource "kubernetes_deployment" "communications" {
     replicas = var.project_replicas_count
     selector {
       match_labels = {
-        app = var.project_name
+        app = "${var.environment_prefix}${var.project_name}"
       }
     }
     template {
       metadata {
         labels = {
-          app = var.project_name
+          app = "${var.environment_prefix}${var.project_name}"
         }
       }
       spec {
@@ -55,7 +52,7 @@ resource "kubernetes_deployment" "communications" {
         }
         container {
           image             = "${var.do_registry_name}/${var.project_name}:${var.project_image_tag}"
-          name              = "${var.project_name}-container"
+          name              = "${var.environment_prefix}${var.project_name}-container"
           image_pull_policy = "Always"
           resources {
             limits = {
@@ -73,7 +70,7 @@ resource "kubernetes_deployment" "communications" {
           }
           env_from {
             secret_ref {
-              name = var.project_secrets_name
+              name = "${var.environment_prefix}${var.project_secrets_name}"
             }
           }
         }
