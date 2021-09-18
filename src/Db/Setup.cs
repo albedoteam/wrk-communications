@@ -1,10 +1,8 @@
-﻿using AlbedoTeam.Sdk.DataLayerAccess;
-using AlbedoTeam.Sdk.DataLayerAccess.Abstractions;
-using Communications.Business.Db.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Communications.Business.Db
+﻿namespace Communications.Business.Db
 {
+    using Abstractions;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class Setup
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)

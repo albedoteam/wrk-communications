@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
-using AlbedoTeam.Communications.Contracts.Common;
-using AlbedoTeam.Communications.Contracts.Events;
-using AlbedoTeam.Communications.Contracts.Responses;
-using AutoMapper;
-using Communications.Business.Mappers.Abstractions;
-using Communications.Business.Models;
-using Communications.Business.Models.SubDocuments;
-using Communications.Business.Services.Models;
-
-namespace Communications.Business.Mappers
+﻿namespace Communications.Business.Mappers
 {
+    using System.Collections.Generic;
+    using Abstractions;
+    using AlbedoTeam.Communications.Contracts.Common;
+    using AlbedoTeam.Communications.Contracts.Events;
+    using AlbedoTeam.Communications.Contracts.Requests;
+    using AlbedoTeam.Communications.Contracts.Responses;
+    using AlbedoTeam.Sdk.DataLayerAccess.Utils.Query;
+    using AutoMapper;
+    using Models;
+    using Models.SubDocuments;
+    using Services.Models;
+
     public class MessageLogMapper : IMessageLogMapper
     {
         private readonly IMapper _mapper;
@@ -46,6 +48,10 @@ namespace Communications.Business.Mappers
                                 Address = value
                             });
                     });
+
+                // request -> query
+                cfg.CreateMap<ListMessageLogs, QueryParams>(MemberList.Destination)
+                    .ForMember(l => l.Sorting, opt => opt.MapFrom(o => o.Sorting.ToString()));
             });
 
             _mapper = config.CreateMapper();
@@ -64,6 +70,11 @@ namespace Communications.Business.Mappers
         public MessageSent MapModelToSentEvent(MessageLog messageLog)
         {
             return _mapper.Map<MessageLog, MessageSent>(messageLog);
+        }
+
+        public QueryParams RequestToQuery(ListMessageLogs request)
+        {
+            return _mapper.Map<ListMessageLogs, QueryParams>(request);
         }
     }
 }

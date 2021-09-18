@@ -1,8 +1,8 @@
-﻿using Communications.Business.Mappers.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Communications.Business.Mappers
+﻿namespace Communications.Business.Mappers
 {
+    using Abstractions;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class Setup
     {
         public static IServiceCollection AddMappers(this IServiceCollection services)

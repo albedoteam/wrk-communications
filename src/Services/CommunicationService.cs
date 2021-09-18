@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AlbedoTeam.Communications.Contracts.Common;
-using Communications.Business.Services.Abstractions;
-using Communications.Business.Services.Models;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-
-namespace Communications.Business.Services
+﻿namespace Communications.Business.Services
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Abstractions;
+    using AlbedoTeam.Communications.Contracts.Common;
+    using Models;
+    using SendGrid;
+    using SendGrid.Helpers.Mail;
+
     public class CommunicationService : ICommunicationService
     {
         public async Task<SendResult> Send(Message message)

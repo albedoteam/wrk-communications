@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using AlbedoTeam.Communications.Contracts.Common;
-using Communications.Business.Models.SubDocuments;
-
-namespace Communications.Business.Services.Models
+﻿namespace Communications.Business.Services.Models
 {
+    using System.Collections.Generic;
+    using AlbedoTeam.Communications.Contracts.Common;
+    using Business.Models.SubDocuments;
+
     public class Message
     {
         public string AccountId { get; set; }

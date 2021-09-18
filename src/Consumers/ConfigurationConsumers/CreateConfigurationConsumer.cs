@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AlbedoTeam.Communications.Contracts.Common;
-using AlbedoTeam.Communications.Contracts.Requests;
-using AlbedoTeam.Communications.Contracts.Responses;
-using Communications.Business.Db.Abstractions;
-using Communications.Business.Mappers.Abstractions;
-using Communications.Business.Services.Abstractions;
-using MassTransit;
-
-namespace Communications.Business.Consumers.ConfigurationConsumers
+﻿namespace Communications.Business.Consumers.ConfigurationConsumers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AlbedoTeam.Communications.Contracts.Common;
+    using AlbedoTeam.Communications.Contracts.Requests;
+    using AlbedoTeam.Communications.Contracts.Responses;
+    using Db.Abstractions;
+    using Mappers.Abstractions;
+    using MassTransit;
+    using Services.Abstractions;
+
     public class CreateConfigurationConsumer : IConsumer<CreateConfiguration>
     {
         private readonly IAccountService _accountService;
