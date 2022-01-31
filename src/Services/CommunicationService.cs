@@ -21,7 +21,7 @@
         private static async Task<SendResult> SendUsingTwillio(Message message)
         {
             // todo externalize on some vault/secret
-            const string apiKey = "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";
+            const string apiKey = "xxxx";
 
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress(message.From.Address, message.From.Name);
